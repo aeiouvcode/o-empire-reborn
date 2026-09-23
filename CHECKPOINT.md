@@ -10,3 +10,7 @@ Completed atomic steps, newest last. Do not redo anything listed here.
 | 2026-09-23 | Removed the dashed ellipse overlay; darker soft corner vignette | same commit |
 | 2026-09-23 | Canvas width follows viewport aspect (H fixed 270, W 120-640), narrow frame margin on phone | same commit |
 | 2026-09-23 | CSP script/style hashes recomputed | same commit, live boot verified |
+| 2026-09-23 | M14: ruins/caches/tower redrawn as top-down pixel objects (drawHouse, drawConifer, drawWall, drawCache, drawTower) | commit "M14 drawn ruins and synthesized sound" |
+| 2026-09-23 | M14: Web Audio sound pass (wind, drone, steps, bells, cues, mute ♪/M, suspends when hidden) | same commit; headless 390x844: audio running, mute toggles, 0 errors |
+| 2026-09-23 | M14: pause/sound buttons given dark pill backing for legibility | same commit |
+| 2026-09-23 | M14: CSP hashes recomputed; directives unchanged; secret and sink scan clean | same commit |

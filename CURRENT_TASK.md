@@ -9,11 +9,16 @@
 - [x] Field reads as a light grey halftone ground with scattered scarlet blossoms, not dark crimson walls on a dark ground (cycle 2)
 - [x] No aspect distortion on phone: square pixels at 390px (cycle 2)
 - [x] Message text legible on the lighter ground (cycle 2)
-- [ ] Ruins and caches read as drawn objects (reference: small pixel house, trees, tower seen from above), not flat grey rectangles
+- [x] Ruins and caches read as drawn objects: pixel houses with roof ridge and chimney, conifer stands, broken walls, marker-stone caches, round tower with merlons and cast shadow (M14)
 - [ ] Corridor bloom banks match the dotted blossom scale of the field
 - [ ] Bearer scale and camera closer to the reference's near top-down, small figure
 - [ ] Title screen on phone has enough contrast to read the scene behind it
 - [ ] Inventory / hand screen in the reference's style (reference frame 4) - not started
+
+- [x] Synthesized sound, no assets, soft highs: wind bed by field density, low drone that detunes with rot, footsteps, search bell, milestone toll, bread/tincture cues, ending chords, mute toggle (♪ / M) (M14)
+- [x] Pause and sound buttons legible over the light field (M14)
+
+**Owner:** web build owned by the O Empire web agent since 2026-09-23 (design-sweep agent is audit-only here; Godot track works only under godot/).
 
 ## Non-goals
 
