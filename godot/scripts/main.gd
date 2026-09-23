@@ -54,6 +54,7 @@ var gothic: FontFile
 var audio
 var heart_t := 0.0
 var stir_told := false
+var note_queue: Array = []
 var satchel
 var last_step := 0
 
@@ -248,7 +249,7 @@ func _build_ui(layer: CanvasLayer) -> void:
 	eb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	endscr.add_child(eb)
 	endscr.set_meta("band", eb)
-	end_title = _label(endscr, 34, PAPER)
+	end_title = _label(endscr, 30, PAPER)
 	end_title.add_theme_font_override("font", gothic)
 	end_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	end_sub = _label(endscr, 14, Color(PAPER, 0.85))
@@ -308,11 +309,11 @@ func _layout() -> void:
 	eb.position = Vector2(x0, h * 0.32)
 	eb.size = Vector2(w, 230)
 	end_title.position = Vector2(x0 + 20, h * 0.32 + 24)
-	end_title.size = Vector2(w - 40, 80)
-	end_sub.position = Vector2(x0 + 24, h * 0.32 + 118)
+	end_title.size = Vector2(w - 40, 84)
+	end_sub.position = Vector2(x0 + 24, h * 0.32 + 124)
 	end_sub.size = Vector2(w - 48, 60)
 	var e3: Label = endscr.get_meta("again")
-	e3.position = Vector2(x0, h * 0.32 + 190)
+	e3.position = Vector2(x0, h * 0.32 + 204)
 	e3.size = Vector2(w, 20)
 	satchel.position = fr.position
 	satchel.size = fr.size
@@ -328,6 +329,7 @@ func _draw_stick() -> void:
 
 func _reset() -> void:
 	stir_told = false
+	note_queue.clear()
 	G = {"mode": "title", "t": 0.0, "stam": 100.0, "rot": 4.0, "bread": 1, "tincture": 0, "milestone": -1,
 		"msgT": 0.0, "search": 0.0, "ended": false, "prog": 0.0, "pos": Vector3(World.path_x(0), 0, 0), "vel": Vector3.ZERO}
 	for c in world.caches:
@@ -348,6 +350,11 @@ func _start() -> void:
 	_note("The reliquary wakes against your spine.")
 
 func _note(s: String) -> void:
+	# a line already on screen finishes first; later lines wait their turn instead of overwriting it
+	if G.msgT > 0.8:
+		if not note_queue.has(s):
+			note_queue.append(s)
+		return
 	lbl_msg.text = s
 	lbl_msg.modulate.a = 1.0
 	G.msgT = 4.2
@@ -402,11 +409,16 @@ func _tincture() -> void:
 	_note("The tincture burns a clean path through you.")
 
 func _finish(ok: bool) -> void:
+	# the end screen owns the page: drop any story line still fading or waiting
+	note_queue.clear()
+	G.msgT = 0.0
+	lbl_msg.modulate.a = 0.0
 	if G.ended:
 		return
 	G.ended = true
 	G.mode = "end"
-	end_title.text = "THE TOWER REMEMBERS YOU" if ok else "NO EMPIRE OUTLIVES ITS ROT"
+	# blackletter capitals are unreadable; title case keeps the gothic face legible on a phone
+	end_title.text = "The Tower Remembers You" if ok else "No Empire Outlives Its Rot"
 	end_sub.text = "At the battlements, the reliquary becomes light. Beyond them: another red country." if ok else "The flowers take you gently. Your burden flowers before it touches the ground."
 	get_tree().create_timer(0.8).timeout.connect(func(): endscr.visible = true)
 
@@ -493,6 +505,8 @@ func _process(dt: float) -> void:
 	if G.msgT > 0:
 		G.msgT -= dt
 		lbl_msg.modulate.a = clampf(G.msgT / 0.8, 0, 1)
+	elif not note_queue.is_empty() and G.mode == "play":
+		_note(note_queue.pop_front())
 	_update(dt)
 	bearer.position = G.pos
 	world.update_around(PATH_LEN - 20.0 if G.mode == "title" else G.prog, G.pos)
