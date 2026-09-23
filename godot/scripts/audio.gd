@@ -63,6 +63,8 @@ func _ready() -> void:
 	drone = _player(_wav(s, true), -80.0)
 	# footstep: soft thud on grass
 	sfx["step"] = _wav(_env(_noise_lp(int(RATE * 0.12), 260.0, rng), 0.004, 0.09, 1.8))
+	# footstep on the packed road: short dry scuff, still low-passed so it never clicks
+	sfx["step_road"] = _wav(_env(_noise_lp(int(RATE * 0.08), 700.0, rng), 0.003, 0.06, 1.4))
 	# search: rustle of cloth and stone
 	sfx["search"] = _wav(_env(_noise_lp(int(RATE * 0.9), 900.0, rng), 0.08, 0.7, 1.2))
 	# find: a small dull bell

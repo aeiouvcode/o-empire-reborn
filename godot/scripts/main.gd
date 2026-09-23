@@ -473,7 +473,7 @@ func _update(dt: float) -> void:
 	var st := int(floor(bearer.phase))
 	if st != last_step and vel.length() > 0.1:
 		last_step = st
-		audio.play("step", -22.0 + (2.0 if running else 0.0), randf_range(0.85, 1.1))
+		audio.play("step_road" if absf(G.pos.x - World.path_x(G.pos.z)) < 2.2 else "step", -22.0 + (2.0 if running else 0.0), randf_range(0.85, 1.1))
 	audio.set_mood(smoothstep(900.0, 1150.0, G.prog), running)
 	if G.rot > 60.0:
 		heart_t -= dt

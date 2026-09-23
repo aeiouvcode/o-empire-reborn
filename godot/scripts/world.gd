@@ -27,6 +27,10 @@ func _mat(key: String, v: float, extra := {}) -> StandardMaterial3D:
 		return mats[key]
 	var m := StandardMaterial3D.new()
 	m.albedo_color = Color(v, v, v * 0.98)
+	if key == "roof":
+		# roofs face away from the key light on the overhead camera; lift them so tiles read as pale planes like the reference
+		m.emission_enabled = true
+		m.emission = Color(0.34, 0.34, 0.33)
 	m.roughness = 1.0
 	m.metallic_specular = 0.0
 	for k in extra:
@@ -250,13 +254,34 @@ func _house(parent: Node3D, pos: Vector3, rot_y: float, rng: RandomNumberGenerat
 		var pr := PrismMesh.new()
 		pr.size = Vector3(w + 1.0, rng.randf_range(3.0, 4.0), d + 0.9)
 		roof.mesh = pr
-		roof.material_override = _mat("roof", 0.74)
+		roof.material_override = _mat("roof", 0.82)
 		roof.position = Vector3(0, h + pr.size.y * 0.5, 0)
 		n.add_child(roof)
 		_box(n, Vector3(0.18, 0.18, d + 1.1), Vector3(0, h + pr.size.y + 0.02, 0), 0.0, _mat("wall", 0.2))
 		for sx in [-1.0, 1.0]:
 			_box(n, Vector3(0.12, 0.12, d + 0.9), Vector3(sx * (w + 1.0) * 0.5, h + 0.05, 0), 0.0, _mat("wall", 0.2))
+		# tile courses: dark lines along each slope, parallel to the ridge
+		var rw := (w + 1.0) * 0.5
+		var ang := atan2(pr.size.y, rw)
+		for sx in [-1.0, 1.0]:
+			for k in range(1, 5):
+				var t := k / 5.0
+				var b := _box(n, Vector3(0.07, 0.05, d + 0.9), Vector3(sx * rw * (1.0 - t) + sx * 0.03, h + pr.size.y * t + 0.03, 0), 0.0, _mat("wall", 0.2))
+				b.rotation.z = -sx * ang
 		_box(n, Vector3(0.5, 1.4, 0.5), Vector3(w * 0.25, h + pr.size.y * 0.55, d * 0.2), 0.0, _mat("wall", 0.2))
+		# chimney smoke: a few pale puffs drifting off
+		for k in 3:
+			var puff := MeshInstance3D.new()
+			var sp := SphereMesh.new()
+			sp.radius = 0.35 + k * 0.22
+			sp.height = sp.radius * 1.6
+			sp.radial_segments = 8
+			sp.rings = 4
+			puff.mesh = sp
+			puff.material_override = _mat("smoke", 0.95, {"transparency": BaseMaterial3D.TRANSPARENCY_ALPHA, "albedo_color": Color(0.95, 0.95, 0.93, 0.55), "shading_mode": BaseMaterial3D.SHADING_MODE_UNSHADED})
+			puff.position = Vector3(w * 0.25 + k * 0.45, h + pr.size.y * 0.55 + 1.2 + k * 0.8, d * 0.2 - k * 0.3)
+			puff.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			n.add_child(puff)
 		# half-timbered gable ends: pale plaster triangle with dark beams, like the reference village
 		for e in [-1.0, 1.0]:
 			var g := MeshInstance3D.new()
@@ -273,7 +298,7 @@ func _house(parent: Node3D, pos: Vector3, rot_y: float, rng: RandomNumberGenerat
 			_box(n, Vector3(0.55, 0.5, 0.08), Vector3(w * 0.25, h * 0.6, e * (d * 0.5 + 0.04)), 0.0, _mat("plaster", 0.86))
 	else:
 		for k in 4:
-			_box(n, Vector3(rng.randf_range(0.5, 1.2), 0.4, rng.randf_range(0.5, 1.2)), Vector3(rng.randf_range(-w, w) * 0.4, h + 0.1, rng.randf_range(-d, d) * 0.4), rng.randf() * TAU, _mat("roof", 0.74))
+			_box(n, Vector3(rng.randf_range(0.5, 1.2), 0.4, rng.randf_range(0.5, 1.2)), Vector3(rng.randf_range(-w, w) * 0.4, h + 0.1, rng.randf_range(-d, d) * 0.4), rng.randf() * TAU, _mat("roof", 0.82))
 
 func _flowers(parent: Node3D, z0: float, z1: float, rng: RandomNumberGenerator) -> void:
 	var mid := -(z0 + z1) * 0.5
