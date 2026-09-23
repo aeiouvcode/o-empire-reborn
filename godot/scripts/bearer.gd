@@ -14,10 +14,14 @@ var held := 0.0
 var facing := PI
 var kneel := 0.0
 
-func _m(v: float, red := false) -> StandardMaterial3D:
+func _m(v: float, red := false, glow := 0.0) -> StandardMaterial3D:
 	var m := StandardMaterial3D.new()
 	m.albedo_color = Color(0.85, 0.07, 0.06) if red else Color(v, v, v)
 	m.roughness = 1.0
+	if glow > 0.0:
+		# keeps the reliquary a pale mark on the tiny bearer even in shade
+		m.emission_enabled = true
+		m.emission = Color(glow, glow, glow * 0.97)
 	return m
 
 func _part(parent: Node3D, mesh: Mesh, pos: Vector3, mat: Material) -> MeshInstance3D:
@@ -68,14 +72,14 @@ func _ready() -> void:
 	body.add_child(reliq)
 	var rb := BoxMesh.new()
 	rb.size = Vector3(0.56, 0.72, 0.36)
-	_part(reliq, rb, Vector3.ZERO, _m(0.9))
+	_part(reliq, rb, Vector3.ZERO, _m(0.95, false, 0.45))
 	var band := BoxMesh.new()
 	band.size = Vector3(0.6, 0.08, 0.4)
 	_part(reliq, band, Vector3(0, 0.18, 0), dark)
 	_part(reliq, band, Vector3(0, -0.2, 0), dark)
 	var cap := PrismMesh.new()
 	cap.size = Vector3(0.62, 0.28, 0.4)
-	_part(reliq, cap, Vector3(0, 0.5, 0), _m(0.9))
+	_part(reliq, cap, Vector3(0, 0.5, 0), _m(0.95, false, 0.45))
 	# flowering rot: scarlet buds that appear on cloak and reliquary as rot climbs
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 5

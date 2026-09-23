@@ -53,6 +53,7 @@ var font: FontVariation
 var gothic: FontFile
 var audio
 var heart_t := 0.0
+var stir_told := false
 var satchel
 var last_step := 0
 
@@ -326,6 +327,7 @@ func _draw_stick() -> void:
 	touch_ui.draw_circle(stick_base + stick_vec * 40.0, 14, Color(0.2, 0.18, 0.2, 0.9))
 
 func _reset() -> void:
+	stir_told = false
 	G = {"mode": "title", "t": 0.0, "stam": 100.0, "rot": 4.0, "bread": 1, "tincture": 0, "milestone": -1,
 		"msgT": 0.0, "search": 0.0, "ended": false, "prog": 0.0, "pos": Vector3(World.path_x(0), 0, 0), "vel": Vector3.ZERO}
 	for c in world.caches:
@@ -448,7 +450,11 @@ func _update(dt: float) -> void:
 		var speed: float = (3.4 if running else 2.3) * (1.0 - G.rot * 0.0033)
 		vel = Vector3(m.x, 0, m.y) * speed
 		G.stam -= dt * (8.1 if running else 2.6) * (1.0 + dense * 0.35) * m.length()
-		G.rot += dt * (0.014 + dense * 0.16) * m.length()
+		G.rot += dt * (0.014 + dense * 0.16 * (2.2 if running else 1.0)) * m.length()
+		# running through blossoms stirs them: reckless sprinting is faster but feeds the rot
+		if running and dense > 0.7 and not stir_told:
+			stir_told = true
+			_note("The blossoms stir as you run.")
 	else:
 		G.stam += 7.0 * dt
 	var p: Vector3 = G.pos + vel * dt
