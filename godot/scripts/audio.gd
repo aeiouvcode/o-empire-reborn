@@ -34,6 +34,8 @@ func _noise_lp(n: int, cut: float, rng: RandomNumberGenerator) -> PackedFloat32A
 	return out
 
 func _ready() -> void:
+	# measured -34.7 LUFS / -18 dBFS peak in a movie capture; lift to about -30 LUFS, still quiet
+	AudioServer.set_bus_volume_db(0, 5.0)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 1170
 	# wind bed: two low-passed noise layers with slow gusting, crossfaded at the loop seam

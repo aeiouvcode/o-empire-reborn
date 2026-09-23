@@ -9,6 +9,7 @@ uniform float time = 0.0;
 uniform float fade = 0.0;
 uniform float tone = 1.0;
 uniform float exposure = 1.0;
+uniform float contrast = 1.0;
 uniform vec2 red_offset = vec2(0.18, -0.12);
 
 const vec3 PAL[6] = vec3[](
@@ -37,6 +38,7 @@ void fragment() {
 	float aa = max(fwidth(c.x), 0.02) * 0.9;
 	vec3 col = texture(scene, (ci + 0.5) / cells).rgb;
 	float L = pow(clamp(dot(col, vec3(0.299, 0.587, 0.114)) * exposure, 0.0, 1.0), tone);
+	L = clamp((L - 0.45) * contrast + 0.45, 0.0, 1.0);
 	float v = pow(L, 0.95) * 5.0 + (bayer4(ci) - 0.5) * 0.9;
 	float lo = clamp(floor(v), 0.0, 4.0);
 	float t = clamp(v - lo, 0.0, 1.0);

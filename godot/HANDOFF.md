@@ -1,9 +1,10 @@
 # Handoff (Godot track, branch godot)
 
 ## Resume here
-Cycle 3: hand/inventory screen (reference frame 6), paper highlights a touch brighter on web (cream dots in lit ground), blackletter-style title type, cairn discoverability at night-dark stretches, bearer silhouette readability, full-walk timing sim.
+Cycle 4: title/HUD type closer to the reference (blackletter item names, pixel UI), steeper detailed roofs, bearer silhouette readability, satchel hand drawn with more anatomy/tone, reckless-run balance check, footstep variety on road vs flowers.
 
 ## Cycle log
+- C3 2026-09-23: Satchel screen (Inventory / Hand tabs, dotted frames, halftone-dotted reliquary / bread / tincture / hand with rot buds, pauses play; I / Tab / pad Back / SATCHEL button). Highlight contrast 1.3 on web. Audio measured from a movie capture (-34.7 LUFS, -18 dBFS peak, >4 kHz content 19 dB under mean) and lifted +5 dB. Balance: sim showed rot never threatened (peak 47, tinctures unused); rot rate in blossoms 0.092 -> 0.16 gives walk ~11:00, peak rot 76 without tinctures.
 - C2 2026-09-23: web tone calibrated (exposure 0.72 / tone 1.45 on web, measured ground mean 0.58 vs Steam frames 0.47-0.63); synthesized audio (wind bed, footsteps, cairn search, find bell, milestone bell, tower drone, rot heartbeat); half-timbered gables; title camera closer on the tower. Deployed web export to Pages /godot/.
 - C1 2026-09-23: full loop ported, halftone plate pass, touch controls, web export boots at 390x844. Grade PARTIAL. Frames in qa/frames/.
 

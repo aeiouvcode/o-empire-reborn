@@ -6,6 +6,7 @@ extends Node
 const World := preload("res://scripts/world.gd")
 const Bearer := preload("res://scripts/bearer.gd")
 const Audio := preload("res://scripts/audio.gd")
+const Satchel := preload("res://scripts/satchel.gd")
 const PATH_LEN := 1170.0
 const CELLS_W := 132.0
 const PAPER := Color(0.945, 0.918, 0.835)
@@ -51,6 +52,7 @@ var frame := 0
 var font: FontVariation
 var audio
 var heart_t := 0.0
+var satchel
 var last_step := 0
 
 func _ready() -> void:
@@ -92,6 +94,7 @@ func _ready() -> void:
 	post.set_shader_parameter("scene", svp.get_texture())
 	# WebGL hands the viewport texture over brighter than desktop GL; calibrated against the Steam frames
 	post.set_shader_parameter("tone", float(params.get("tone", "1.45" if OS.has_feature("web") else "1.15")))
+	post.set_shader_parameter("contrast", float(params.get("contrast", "1.3" if OS.has_feature("web") else "1.1")))
 	post.set_shader_parameter("exposure", float(params.get("exp", "0.72" if OS.has_feature("web") else "1.0")))
 	screen.material = post
 	layer.add_child(screen)
@@ -122,7 +125,7 @@ func _parse_params() -> void:
 func _setup_input() -> void:
 	var map := {
 		"up": [KEY_W, KEY_UP], "down": [KEY_S, KEY_DOWN], "left": [KEY_A, KEY_LEFT], "right": [KEY_D, KEY_RIGHT],
-		"run": [KEY_SHIFT], "kneel": [KEY_R], "search": [KEY_E], "bread": [KEY_1], "tincture": [KEY_2], "start": [KEY_ENTER, KEY_SPACE],
+		"run": [KEY_SHIFT], "kneel": [KEY_R], "search": [KEY_E], "bread": [KEY_1], "tincture": [KEY_2], "start": [KEY_ENTER, KEY_SPACE], "satchel": [KEY_I, KEY_TAB],
 	}
 	for act in map:
 		if not InputMap.has_action(act):
@@ -131,7 +134,7 @@ func _setup_input() -> void:
 			var ev := InputEventKey.new()
 			ev.physical_keycode = k
 			InputMap.action_add_event(act, ev)
-	var pads := {"run": JOY_BUTTON_A, "kneel": JOY_BUTTON_B, "bread": JOY_BUTTON_X, "tincture": JOY_BUTTON_Y, "search": JOY_BUTTON_RIGHT_SHOULDER, "start": JOY_BUTTON_START}
+	var pads := {"run": JOY_BUTTON_A, "kneel": JOY_BUTTON_B, "bread": JOY_BUTTON_X, "tincture": JOY_BUTTON_Y, "search": JOY_BUTTON_RIGHT_SHOULDER, "start": JOY_BUTTON_START, "satchel": JOY_BUTTON_BACK}
 	for act in pads:
 		var jb := InputEventJoypadButton.new()
 		jb.button_index = pads[act]
@@ -201,8 +204,13 @@ func _build_ui(layer: CanvasLayer) -> void:
 	touch_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	touch_ui.draw.connect(_draw_stick)
 	ui.add_child(touch_ui)
-	for b in [["run", "RUN"], ["kneel", "KNEEL"], ["search", "SEARCH"], ["bread", "BREAD"], ["tincture", "TINCTURE"]]:
+	for b in [["run", "RUN"], ["kneel", "KNEEL"], ["search", "SEARCH"], ["bread", "BREAD"], ["tincture", "TINCTURE"], ["satchel", "SATCHEL"]]:
 		buttons[b[0]] = _frame_box(touch_ui, b[1])
+
+	satchel = Satchel.new()
+	satchel.setup(font)
+	satchel.visible = false
+	layer.add_child(satchel)
 
 	title = Control.new()
 	title.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -276,11 +284,11 @@ func _layout() -> void:
 	var bh := 40.0
 	var gx := x0 + w - 2 * bw - 22
 	var gy := h - 3 * bh - 34
-	var place := {"search": [0, 0], "kneel": [1, 0], "bread": [0, 1], "tincture": [1, 1], "run": [0, 2]}
+	var place := {"search": [0, 0], "kneel": [1, 0], "bread": [0, 1], "tincture": [1, 1], "run": [0, 2], "satchel": [1, 2]}
 	for k in place:
 		var b: Panel = buttons[k]
 		b.position = Vector2(gx + place[k][0] * (bw + 8), gy + place[k][1] * (bh + 8))
-		b.size = Vector2(bw * (2.0 if k == "run" else 1.0) + (8.0 if k == "run" else 0.0), bh)
+		b.size = Vector2(bw, bh)
 	var band: ColorRect = title.get_meta("band")
 	band.position = Vector2(x0, h * 0.30)
 	band.size = Vector2(w, 250)
@@ -299,6 +307,8 @@ func _layout() -> void:
 	var e3: Label = endscr.get_meta("again")
 	e3.position = Vector2(x0, h * 0.32 + 190)
 	e3.size = Vector2(w, 20)
+	satchel.position = fr.position
+	satchel.size = fr.size
 	touch_ui.queue_redraw()
 
 func _draw_stick() -> void:
@@ -402,8 +412,19 @@ func _input_move() -> Vector2:
 func _held(act: String) -> bool:
 	return Input.is_action_pressed(act) or btn_touch.values().has(act)
 
-func _update(dt: float) -> void:
+func _toggle_satchel() -> void:
 	if G.mode != "play":
+		return
+	satchel.visible = not satchel.visible
+	if satchel.visible:
+		satchel.refresh(G)
+		stick_vec = Vector2.ZERO
+		stick_idx = -1
+		btn_touch.clear()
+		audio.play("search", -24.0, 1.4)
+
+func _update(dt: float) -> void:
+	if G.mode != "play" or satchel.visible:
 		return
 	G.t += dt
 	var dense: float = World.field_density(G.prog)
@@ -421,7 +442,7 @@ func _update(dt: float) -> void:
 		var speed: float = (3.4 if running else 2.3) * (1.0 - G.rot * 0.0033)
 		vel = Vector3(m.x, 0, m.y) * speed
 		G.stam -= dt * (8.1 if running else 2.6) * (1.0 + dense * 0.35) * m.length()
-		G.rot += dt * (0.014 + dense * 0.092) * m.length()
+		G.rot += dt * (0.014 + dense * 0.16) * m.length()
 	else:
 		G.stam += 7.0 * dt
 	var p: Vector3 = G.pos + vel * dt
@@ -516,6 +537,18 @@ func _sync() -> void:
 func _unhandled_input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("start") and G.mode != "play":
 		_start()
+	if ev.is_action_pressed("satchel"):
+		_toggle_satchel()
+		return
+	if satchel.visible:
+		if ev.is_action_pressed("left"):
+			satchel.cycle(-1)
+		elif ev.is_action_pressed("right"):
+			satchel.cycle(1)
+		elif ev.is_action_pressed("up") or ev.is_action_pressed("down"):
+			satchel.tab = 1 - satchel.tab
+			satchel.queue_redraw()
+		return
 	if G.mode == "play":
 		if ev.is_action_pressed("search"):
 			_search()
@@ -531,6 +564,11 @@ func _input(ev: InputEvent) -> void:
 				_start()
 				get_viewport().set_input_as_handled()
 				return
+			if satchel.visible:
+				if satchel.tap(ev.position) == "close":
+					_toggle_satchel()
+				get_viewport().set_input_as_handled()
+				return
 			var hit := ""
 			for k in buttons:
 				if buttons[k].get_global_rect().has_point(ev.position):
@@ -543,6 +581,9 @@ func _input(ev: InputEvent) -> void:
 					_bread()
 				elif hit == "tincture":
 					_tincture()
+				elif hit == "satchel":
+					btn_touch.erase(ev.index)
+					_toggle_satchel()
 			elif ev.position.x < _frame_rect().get_center().x and stick_idx == -1:
 				stick_idx = ev.index
 				stick_base = ev.position
@@ -572,6 +613,12 @@ func _apply_params() -> void:
 			bearer.position = G.pos
 			if params.has("face"):
 				bearer.facing = float(params.face)
+			if params.has("satchel"):
+				G.bread = 2
+				G.tincture = 1
+				_toggle_satchel()
+				satchel.tab = 1 if params.satchel == "hand" else 0
+				satchel.queue_redraw()
 			if s == "end_ok":
 				_finish(true)
 			elif s == "end_fail":
