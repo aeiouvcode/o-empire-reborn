@@ -267,20 +267,20 @@ func _house(parent: Node3D, pos: Vector3, rot_y: float, rng: RandomNumberGenerat
 		for sx in [-1.0, 1.0]:
 			for k in range(1, 5):
 				var t := k / 5.0
-				var b := _box(n, Vector3(0.07, 0.05, d + 0.9), Vector3(sx * rw * (1.0 - t) + sx * 0.03, h + pr.size.y * t + 0.03, 0), 0.0, _mat("wall", 0.2))
+				var b := _box(n, Vector3(0.045, 0.04, d + 0.9), Vector3(sx * rw * (1.0 - t) + sx * 0.03, h + pr.size.y * t + 0.03, 0), 0.0, _mat("tile", 0.42))
 				b.rotation.z = -sx * ang
 		_box(n, Vector3(0.5, 1.4, 0.5), Vector3(w * 0.25, h + pr.size.y * 0.55, d * 0.2), 0.0, _mat("wall", 0.2))
-		# chimney smoke: a few pale puffs drifting off
-		for k in 3:
+		# chimney smoke: dark ink puffs thinning as they drift, like the reference burning house
+		for k in 5:
 			var puff := MeshInstance3D.new()
 			var sp := SphereMesh.new()
-			sp.radius = 0.5 + k * 0.3
+			sp.radius = 0.35 + k * 0.18
 			sp.height = sp.radius * 1.6
 			sp.radial_segments = 8
 			sp.rings = 4
 			puff.mesh = sp
-			puff.material_override = _mat("smoke", 0.62, {"transparency": BaseMaterial3D.TRANSPARENCY_ALPHA, "albedo_color": Color(0.62, 0.61, 0.6, 0.6), "shading_mode": BaseMaterial3D.SHADING_MODE_UNSHADED})
-			puff.position = Vector3(w * 0.25 + k * 0.45, h + pr.size.y * 0.55 + 1.2 + k * 0.8, d * 0.2 - k * 0.3)
+			puff.material_override = _mat("smoke%d" % k, 0.2 + k * 0.08, {"shading_mode": BaseMaterial3D.SHADING_MODE_UNSHADED})
+			puff.position = Vector3(w * 0.25 + k * 0.6, h + pr.size.y * 0.55 + 1.0 + k * 0.7, d * 0.2 - k * 0.5)
 			puff.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			n.add_child(puff)
 		# half-timbered gable ends: pale plaster triangle with dark beams, like the reference village
