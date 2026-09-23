@@ -2,6 +2,10 @@
 
 An original, from-scratch atmospheric survival procession for the browser.
 
+![O Empire title screen](docs/screenshot.jpg)
+
+**Live:** https://aeiouvcode.github.io/o-empire-reborn/
+
 Carry a cursed reliquary across a post-rapture medieval flower field. Manage stamina and flowering rot, search eight caches, and reach the far tower. The visual system uses a hand-built low-resolution canvas renderer with misregistered print plates, halftone-like noise, held-frame gait, burden lag, oblique depth and crimson floral masses.
 
 ## Play
