@@ -1,9 +1,10 @@
 # Handoff (Godot track, branch godot)
 
 ## Resume here
-Cycle 2: web export renders brighter than native (ground washes toward paper on WebGL) - calibrate tone in halftone.gdshader against the web frame, not native. Then: tower close-up on title (reference frame 9), village houses with gable detail (frame 4), hand/inventory screen (frame 6), blackletter-style title type.
+Cycle 3: hand/inventory screen (reference frame 6), paper highlights a touch brighter on web (cream dots in lit ground), blackletter-style title type, cairn discoverability at night-dark stretches, bearer silhouette readability, full-walk timing sim.
 
 ## Cycle log
+- C2 2026-09-23: web tone calibrated (exposure 0.72 / tone 1.45 on web, measured ground mean 0.58 vs Steam frames 0.47-0.63); synthesized audio (wind bed, footsteps, cairn search, find bell, milestone bell, tower drone, rot heartbeat); half-timbered gables; title camera closer on the tower. Deployed web export to Pages /godot/.
 - C1 2026-09-23: full loop ported, halftone plate pass, touch controls, web export boots at 390x844. Grade PARTIAL. Frames in qa/frames/.
 
 ## Discoveries

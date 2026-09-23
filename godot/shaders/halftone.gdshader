@@ -7,6 +7,8 @@ uniform sampler2D scene : filter_nearest;
 uniform vec2 cells = vec2(132.0, 286.0);
 uniform float time = 0.0;
 uniform float fade = 0.0;
+uniform float tone = 1.0;
+uniform float exposure = 1.0;
 uniform vec2 red_offset = vec2(0.18, -0.12);
 
 const vec3 PAL[6] = vec3[](
@@ -34,7 +36,7 @@ void fragment() {
 	vec2 f = fract(c) - 0.5;
 	float aa = max(fwidth(c.x), 0.02) * 0.9;
 	vec3 col = texture(scene, (ci + 0.5) / cells).rgb;
-	float L = clamp(dot(col, vec3(0.299, 0.587, 0.114)), 0.0, 1.0);
+	float L = pow(clamp(dot(col, vec3(0.299, 0.587, 0.114)) * exposure, 0.0, 1.0), tone);
 	float v = pow(L, 0.95) * 5.0 + (bayer4(ci) - 0.5) * 0.9;
 	float lo = clamp(floor(v), 0.0, 4.0);
 	float t = clamp(v - lo, 0.0, 1.0);

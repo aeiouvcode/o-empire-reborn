@@ -254,6 +254,20 @@ func _house(parent: Node3D, pos: Vector3, rot_y: float, rng: RandomNumberGenerat
 		roof.position = Vector3(0, h + pr.size.y * 0.5, 0)
 		n.add_child(roof)
 		_box(n, Vector3(0.5, 1.4, 0.5), Vector3(w * 0.25, h + 1.4, d * 0.2), 0.0, _mat("wall", 0.2))
+		# half-timbered gable ends: pale plaster triangle with dark beams, like the reference village
+		for e in [-1.0, 1.0]:
+			var g := MeshInstance3D.new()
+			var gp := PrismMesh.new()
+			gp.size = Vector3(w * 0.92, pr.size.y * 0.86, 0.06)
+			g.mesh = gp
+			g.material_override = _mat("plaster", 0.86)
+			g.position = Vector3(0, h + gp.size.y * 0.5, e * (d * 0.5 + 0.04))
+			n.add_child(g)
+			_box(n, Vector3(0.1, gp.size.y * 0.8, 0.08), Vector3(0, h + gp.size.y * 0.4, e * (d * 0.5 + 0.08)), 0.0, _mat("wall", 0.2))
+			_box(n, Vector3(w * 0.8, 0.1, 0.08), Vector3(0, h + 0.1, e * (d * 0.5 + 0.08)), 0.0, _mat("wall", 0.2))
+			# lit door and windows on the facade
+			_box(n, Vector3(0.7, 1.3, 0.08), Vector3(-w * 0.2, 0.65, e * (d * 0.5 + 0.04)), 0.0, _mat("plaster", 0.86))
+			_box(n, Vector3(0.55, 0.5, 0.08), Vector3(w * 0.25, h * 0.6, e * (d * 0.5 + 0.04)), 0.0, _mat("plaster", 0.86))
 	else:
 		for k in 4:
 			_box(n, Vector3(rng.randf_range(0.5, 1.2), 0.4, rng.randf_range(0.5, 1.2)), Vector3(rng.randf_range(-w, w) * 0.4, h + 0.1, rng.randf_range(-d, d) * 0.4), rng.randf() * TAU, _mat("roof", 0.74))

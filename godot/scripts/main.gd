@@ -5,6 +5,7 @@ extends Node
 
 const World := preload("res://scripts/world.gd")
 const Bearer := preload("res://scripts/bearer.gd")
+const Audio := preload("res://scripts/audio.gd")
 const PATH_LEN := 1170.0
 const CELLS_W := 132.0
 const PAPER := Color(0.945, 0.918, 0.835)
@@ -48,10 +49,15 @@ var cam_pos := Vector3.ZERO
 var params := {}
 var frame := 0
 var font: FontVariation
+var audio
+var heart_t := 0.0
+var last_step := 0
 
 func _ready() -> void:
 	_parse_params()
 	_setup_input()
+	audio = Audio.new()
+	add_child(audio)
 	svp = SubViewport.new()
 	svp.size = Vector2i(132, 286)
 	svp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
@@ -84,6 +90,9 @@ func _ready() -> void:
 	post = ShaderMaterial.new()
 	post.shader = load("res://shaders/halftone.gdshader")
 	post.set_shader_parameter("scene", svp.get_texture())
+	# WebGL hands the viewport texture over brighter than desktop GL; calibrated against the Steam frames
+	post.set_shader_parameter("tone", float(params.get("tone", "1.45" if OS.has_feature("web") else "1.15")))
+	post.set_shader_parameter("exposure", float(params.get("exp", "0.72" if OS.has_feature("web") else "1.0")))
 	screen.material = post
 	layer.add_child(screen)
 
@@ -317,6 +326,7 @@ func _start() -> void:
 	_reset()
 	G.mode = "play"
 	title.visible = false
+	audio.start_beds()
 	_note("The reliquary wakes against your spine.")
 
 func _note(s: String) -> void:
@@ -346,18 +356,22 @@ func _search() -> void:
 		_note("Only the hollow remains.")
 		return
 	world.use_cache(c)
+	audio.play("search", -18.0)
 	G.search = 1.2
 	if c.tincture:
 		G.tincture += 1
+		audio.play("find", -16.0)
 		_note("You find one bitter tincture.")
 	else:
 		G.bread += 1
+		audio.play("find", -16.0, 0.84)
 		_note("You find bread wrapped in funeral cloth.")
 
 func _bread() -> void:
 	if G.mode != "play" or G.bread < 1:
 		return
 	G.bread -= 1
+	audio.play("eat", -18.0)
 	G.stam = clampf(G.stam + 38.0, 0, 100.0 - G.rot * 0.36)
 	_note("You eat without stopping. The salt tastes old.")
 
@@ -365,6 +379,7 @@ func _tincture() -> void:
 	if G.mode != "play" or G.tincture < 1:
 		return
 	G.tincture -= 1
+	audio.play("tincture", -18.0)
 	G.rot = clampf(G.rot - 20.0, 0, 100)
 	_note("The tincture burns a clean path through you.")
 
@@ -422,11 +437,22 @@ func _update(dt: float) -> void:
 	if mi > G.milestone and mi < LINES.size():
 		G.milestone = mi
 		_note(LINES[mi])
+		audio.play("bell", -15.0)
 	if G.rot >= 100:
 		_finish(false)
 	if G.prog >= PATH_LEN - 0.5:
 		_finish(true)
 	bearer.animate(dt, vel, running, rest, G.search > 0, G.rot)
+	var st := int(floor(bearer.phase))
+	if st != last_step and vel.length() > 0.1:
+		last_step = st
+		audio.play("step", -22.0 + (2.0 if running else 0.0), randf_range(0.85, 1.1))
+	audio.set_mood(smoothstep(900.0, 1150.0, G.prog), running)
+	if G.rot > 60.0:
+		heart_t -= dt
+		if heart_t <= 0.0:
+			heart_t = lerpf(1.3, 0.7, (G.rot - 60.0) / 40.0)
+			audio.play("heart", lerpf(-26.0, -16.0, (G.rot - 60.0) / 40.0))
 
 func _process(dt: float) -> void:
 	dt = minf(dt, 0.1)
@@ -453,7 +479,7 @@ func _camera(dt: float) -> void:
 		var tz := -PATH_LEN + 18.0 - sin(G.t * 0.05) * 6.0
 		G.t += dt
 		target = Vector3(World.path_x(-PATH_LEN - 14.0) + sin(G.t * 0.07) * 3.0, 0, -PATH_LEN - 4.0)
-		offset = Vector3(-4.0, 80.0, 26.0)
+		offset = Vector3(-5.0, 60.0, 30.0)
 	else:
 		target = G.pos + Vector3(0, 0.8, -5.0)
 		offset = Vector3(0, 19.5, 9.5)
