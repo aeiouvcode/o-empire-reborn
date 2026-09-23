@@ -56,6 +56,9 @@ func _para(s: String, pos: Vector2, w: float, size: int, col: Color) -> void:
 
 # fill a polygon with halftone dots whose size follows a light direction
 func _dots(poly: PackedVector2Array, bounds: Rect2, pitch: float, base: float, red_frac := 0.0, seed := 1) -> void:
+	var ol := poly.duplicate()
+	ol.append(poly[0])
+	draw_polyline(ol, Color(PAPER, 0.4), 1.0, true)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed
 	var y := bounds.position.y
@@ -130,8 +133,8 @@ func _icon(kind: String, c: Vector2, s: float) -> void:
 		"reliq":
 			var body := PackedVector2Array([c + Vector2(-0.6, -0.5) * s, c + Vector2(0.6, -0.5) * s, c + Vector2(0.6, 0.9) * s, c + Vector2(-0.6, 0.9) * s])
 			var cap := PackedVector2Array([c + Vector2(-0.72, -0.5) * s, c + Vector2(0, -1.1) * s, c + Vector2(0.72, -0.5) * s])
-			_dots(body, Rect2(c - Vector2(0.7, 0.6) * s, Vector2(1.4, 1.6) * s), 5.0, 0.55, rot / 100.0, 3)
-			_dots(cap, Rect2(c - Vector2(0.8, 1.2) * s, Vector2(1.6, 0.8) * s), 5.0, 0.75)
+			_dots(body, Rect2(c - Vector2(0.7, 0.6) * s, Vector2(1.4, 1.6) * s), 3.6, 0.55, rot / 100.0, 3)
+			_dots(cap, Rect2(c - Vector2(0.8, 1.2) * s, Vector2(1.6, 0.8) * s), 3.6, 0.75)
 			draw_rect(Rect2(c + Vector2(-0.62, -0.05) * s, Vector2(1.24, 0.1) * s), INK)
 			draw_rect(Rect2(c + Vector2(-0.62, 0.45) * s, Vector2(1.24, 0.1) * s), INK)
 		"bread":
@@ -141,10 +144,10 @@ func _icon(kind: String, c: Vector2, s: float) -> void:
 				loaf.append(c + Vector2(cos(a) * 0.9, sin(a) * 0.55 + 0.25) * s)
 			loaf.append(c + Vector2(0.9, 0.45) * s)
 			loaf.append(c + Vector2(-0.9, 0.45) * s)
-			_dots(loaf, Rect2(c - Vector2(1.0, 0.4) * s, Vector2(2.0, 0.9) * s), 5.0, 0.6)
+			_dots(loaf, Rect2(c - Vector2(1.0, 0.4) * s, Vector2(2.0, 0.9) * s), 3.6, 0.6)
 		"tinct":
 			var vial := PackedVector2Array([c + Vector2(-0.18, -0.9) * s, c + Vector2(0.18, -0.9) * s, c + Vector2(0.18, -0.45) * s, c + Vector2(0.55, 0.0) * s, c + Vector2(0.55, 0.8) * s, c + Vector2(-0.55, 0.8) * s, c + Vector2(-0.55, 0.0) * s, c + Vector2(-0.18, -0.45) * s])
-			_dots(vial, Rect2(c - Vector2(0.6, 1.0) * s, Vector2(1.2, 1.9) * s), 5.0, 0.7)
+			_dots(vial, Rect2(c - Vector2(0.6, 1.0) * s, Vector2(1.2, 1.9) * s), 3.6, 0.7)
 			draw_rect(Rect2(c + Vector2(-0.24, -1.05) * s, Vector2(0.48, 0.16) * s), SCARLET)
 
 func _draw() -> void:

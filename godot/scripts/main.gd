@@ -452,7 +452,7 @@ func _update(dt: float) -> void:
 		G.stam -= dt * (8.1 if running else 2.6) * (1.0 + dense * 0.35) * m.length()
 		G.rot += dt * (0.014 + dense * 0.16 * (2.2 if running else 1.0)) * m.length()
 		# running through blossoms stirs them: reckless sprinting is faster but feeds the rot
-		if running and dense > 0.7 and not stir_told:
+		if running and dense > 0.7 and not stir_told and G.msgT <= 0.0:
 			stir_told = true
 			_note("The blossoms stir as you run.")
 	else:

@@ -1,9 +1,10 @@
 # Handoff (Godot track, branch godot)
 
 ## Resume here
-Cycle 9: verify run-stir note in a capture (walk+run in dense field with frames param); smoke puffs are small now - check they read at normal zoom; inventory icons (bread, tincture) to the same finer dot pitch as the hand; audio pass (listen notes if owner reports). Live /godot/ frozen at cycle 6 until the owner confirms per-cycle redeploys.
+Cycle 10: general note queue (any two lines in one frame still overwrite - only the stir note waits today); smoke visibility at normal zoom; end screens (win/fail) checked against reference tone; audio pass. Live /godot/ frozen at cycle 6 until the owner confirms per-cycle redeploys.
 
 ## Cycle log
+- Cycle 9: bug - the sprint "blossoms stir" line was overwritten in the same frame by a milestone line, so players could never see it; now it waits until no line is showing (verified in capture). Inventory icons on the finer 3.6 px dot plate with pale outlines, matching the hand. Source only. Grade PARTIAL.
 - Cycle 8: satchel hand redrawn - Chaikin-smoothed outline, finer 3.6 px dot plate, lighter tone, knuckle creases, heart/head/life lines, pale outline, iron ring on the ring finger (reference frame 6 wedding band), rot buds scaled 0.6. Grammar fix for one bud. Smoke: 8 smaller puffs that sway and swell. Source only. Grade PARTIAL.
 - Cycle 7: chimney smoke now visible (opaque dark unshaded puffs, 5 per chimney, lightening as they rise; alpha puffs never showed in the web export). Tile lines thinner and mid-grey. Source only; no redeploy. Grade PARTIAL.
 - Cycle 6: balance - sprinting through blossoms feeds rot x2.2 (sim, no tinctures: walk WIN 12.5 min peak 70; smart kneel WIN 11.0 min peak 71; all-run LOSE at 1154/1170 - one tincture saves it; before: all-run was the safest line, peak 45). One-time note "The blossoms stir as you run." Roofs: three per-house tones with emission 0.62-0.78 so tiles read pale through the halftone. Reliquary gets a soft emission so the bearer carries a pale mark. Smoke darker/larger. Grade PARTIAL.
