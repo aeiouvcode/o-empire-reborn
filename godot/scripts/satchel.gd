@@ -156,12 +156,12 @@ func _draw() -> void:
 	var h := r.size.y
 	draw_rect(Rect2(Vector2.ZERO, r.size), Color(0.13, 0.115, 0.13, 1.0))
 	var tw := minf(150.0, (w - 60.0) * 0.5)
-	tab_rects[0] = Rect2(w * 0.5 - tw - 10, 34, tw, 34)
-	tab_rects[1] = Rect2(w * 0.5 + 10, 34, tw, 34)
+	tab_rects[0] = Rect2(w * 0.5 - tw - 10, 30, tw, 44)
+	tab_rects[1] = Rect2(w * 0.5 + 10, 30, tw, 44)
 	for i in 2:
 		_frame(tab_rects[i], tab == i)
-		_text(["Inventory", "Hand"][i], tab_rects[i].position + Vector2(0, 22), 14, Color(PAPER, 1.0 if tab == i else 0.5), tab_rects[i].size.x, HORIZONTAL_ALIGNMENT_CENTER)
-	close_rect = Rect2(w - 44, h - 60, 32, 32)
+		_text(["Inventory", "Hand"][i], tab_rects[i].position + Vector2(0, 28), 14, Color(PAPER, 1.0 if tab == i else 0.5), tab_rects[i].size.x, HORIZONTAL_ALIGNMENT_CENTER)
+	close_rect = Rect2(w - 60, h - 66, 44, 44)  # 44 px minimum touch target
 	item_rects.clear()
 	if tab == 1:
 		var c := Vector2(w * 0.5, h * 0.44)
@@ -189,7 +189,7 @@ func _draw() -> void:
 			_frame(rr, i == sel)
 			_text("%s %s" % [items[i].name.to_upper().substr(0, 5), "" if items[i].icon == "reliq" else str(items[i].count)], rr.position + Vector2(0, 28), 12, Color(PAPER, 1.0 if i == sel else 0.55), cw, HORIZONTAL_ALIGNMENT_CENTER)
 	_frame(close_rect, false)
-	_text("X", close_rect.position + Vector2(0, 22), 14, PAPER, 32, HORIZONTAL_ALIGNMENT_CENTER)
+	_text("X", close_rect.position + Vector2(0, 28), 16, PAPER, 44, HORIZONTAL_ALIGNMENT_CENTER)
 	_text("I / TAB  CLOSE", Vector2(20, h - 38), 11, Color(PAPER, 0.45))
 
 # returns "close" | "" ; handles tab / item picks
