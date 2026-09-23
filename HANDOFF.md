@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M16: bearer scale and camera closer to the reference's near top-down small figure (drawBearer, proj). Then the inventory / hand screen in the reference's style (reference frame 4). Check with Naksh's feedback on sound loudness first if any has come in.
+M17: compare the hand screen and bearer against the Steam reference frames (app 4331110) and close the gaps; consider a slightly steeper camera (proj dy/z factors) only if it keeps the 15-chunk layout readable at 390px. Apply any sound-level feedback from Naksh.
 
 ## Blocked
 
@@ -13,6 +13,7 @@ M16: bearer scale and camera closer to the reference's near top-down small figur
 | Approach | Why it failed | Date |
 | --- | --- | --- |
 | Previewing an edited build via document.write or a blob: URL on the live Pages origin | The page's meta CSP pins script/style by sha256. The edited script is blocked, and blob: inherits the creator's CSP. Preview on about:blank instead, and recompute both hashes before every push. | 2026-09-23 |
+| Embedding the game in the Instinct File as an iframe srcdoc | The File host runs in an opaque sandbox with its own script CSP; srcdoc inherits it, so the game script never ran (title showed, BEGIN dead). Scripting the frame from the bundle fails too (cross-origin null). The File now mounts the game into a shadow root from the bundle (mkfile.js pattern). Always tap BEGIN on the File preview before publishing. | 2026-09-23 |
 | Using the o-empire-reborn page itself as the push bridge | connect-src 'none' blocks fetch to api.github.com. Use a bridge page without a CSP. | 2026-09-23 |
 
 ## Discoveries

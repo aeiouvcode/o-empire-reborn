@@ -17,3 +17,5 @@ Completed atomic steps, newest last. Do not redo anything listed here.
 | 2026-09-23 | M15: phone title overlay reshaped (scene visible, type still legible) | commit "M15 title contrast, readable pines, bloom scale, kneel breath" |
 | 2026-09-23 | M15: conifers enlarged and moved roadward; bloom banks and heads scaled down | same commit |
 | 2026-09-23 | M15: kneel breath and cache-in-range cue added to the sound engine | same commit; headless 390x844: 0 errors, audio running |
+| 2026-09-23 | M15 shipped; Instinct File embed fixed (game now runs in the File via shadow root) | commit 452a155; File generation 6 |
+| 2026-09-23 | M16: bearer scale .74, hand screen on pause (cards use items, WALK ON resumes), quick reveal timing | commit "M16 hand screen and smaller bearer"; File generation 7 |

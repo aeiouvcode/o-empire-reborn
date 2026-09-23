@@ -11,9 +11,9 @@
 - [x] Message text legible on the lighter ground (cycle 2)
 - [x] Ruins and caches read as drawn objects: pixel houses with roof ridge and chimney, conifer stands, broken walls, marker-stone caches, round tower with merlons and cast shadow (M14)
 - [x] Corridor bloom banks closer to the field's dotted blossom scale (smaller banks and bloom heads) (M15)
-- [ ] Bearer scale and camera closer to the reference's near top-down, small figure
+- [x] Bearer drawn at 74% scale, closer to the reference's small figure; stillness moths re-anchored (M16). Camera angle unchanged.
 - [x] Title screen on phone shows the scene: dark band only behind the type, field visible above and below (M15)
-- [ ] Inventory / hand screen in the reference's style (reference frame 4) - not started
+- [x] Hand screen: pausing opens WHAT YOU CARRY with bread / tincture / reliquary cards (tap to use), a rot-dependent line, WALK ON (M16). First pass; not yet compared frame-by-frame with reference frame 4.
 
 - [x] Synthesized sound, no assets, soft highs: wind bed by field density, low drone that detunes with rot, footsteps, search bell, milestone toll, bread/tincture cues, ending chords, mute toggle (♪ / M) (M14)
 - [x] Pause and sound buttons legible over the light field (M14)
