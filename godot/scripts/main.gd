@@ -50,6 +50,7 @@ var cam_pos := Vector3.ZERO
 var params := {}
 var frame := 0
 var font: FontVariation
+var gothic: FontFile
 var audio
 var heart_t := 0.0
 var satchel
@@ -102,6 +103,7 @@ func _ready() -> void:
 	font = FontVariation.new()
 	font.base_font = ThemeDB.fallback_font
 	font.spacing_glyph = 2
+	gothic = load("res://fonts/UnifrakturMaguntia-Book.ttf")
 	_build_ui(layer)
 	get_viewport().size_changed.connect(_layout)
 	_reset()
@@ -182,6 +184,8 @@ func _build_ui(layer: CanvasLayer) -> void:
 	layer.add_child(ui)
 	lbl_dist = _label(ui, 13, PAPER)
 	lbl_msg = _label(ui, 17, PAPER)
+	lbl_msg.add_theme_font_override("font", gothic)
+	lbl_msg.add_theme_font_size_override("font_size", 22)
 	lbl_msg.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	lbl_inv = _label(ui, 12, PAPER)
 	for which in ["stam", "rot"]:
@@ -208,7 +212,7 @@ func _build_ui(layer: CanvasLayer) -> void:
 		buttons[b[0]] = _frame_box(touch_ui, b[1])
 
 	satchel = Satchel.new()
-	satchel.setup(font)
+	satchel.setup(font, gothic)
 	satchel.visible = false
 	layer.add_child(satchel)
 
@@ -221,7 +225,8 @@ func _build_ui(layer: CanvasLayer) -> void:
 	band.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	title.add_child(band)
 	title.set_meta("band", band)
-	var t1 := _label(title, 44, PAPER)
+	var t1 := _label(title, 52, PAPER)
+	t1.add_theme_font_override("font", gothic)
 	t1.text = "O EMPIRE!"
 	var t2 := _label(title, 15, SCARLET)
 	t2.text = "WARD THE FLOWERING ROT"
@@ -242,7 +247,8 @@ func _build_ui(layer: CanvasLayer) -> void:
 	eb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	endscr.add_child(eb)
 	endscr.set_meta("band", eb)
-	end_title = _label(endscr, 26, PAPER)
+	end_title = _label(endscr, 34, PAPER)
+	end_title.add_theme_font_override("font", gothic)
 	end_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	end_sub = _label(endscr, 14, Color(PAPER, 0.85))
 	end_sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

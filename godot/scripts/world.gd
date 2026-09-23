@@ -248,12 +248,15 @@ func _house(parent: Node3D, pos: Vector3, rot_y: float, rng: RandomNumberGenerat
 	if not ruined:
 		var roof := MeshInstance3D.new()
 		var pr := PrismMesh.new()
-		pr.size = Vector3(w + 0.8, rng.randf_range(1.8, 2.6), d + 0.6)
+		pr.size = Vector3(w + 1.0, rng.randf_range(3.0, 4.0), d + 0.9)
 		roof.mesh = pr
 		roof.material_override = _mat("roof", 0.74)
 		roof.position = Vector3(0, h + pr.size.y * 0.5, 0)
 		n.add_child(roof)
-		_box(n, Vector3(0.5, 1.4, 0.5), Vector3(w * 0.25, h + 1.4, d * 0.2), 0.0, _mat("wall", 0.2))
+		_box(n, Vector3(0.18, 0.18, d + 1.1), Vector3(0, h + pr.size.y + 0.02, 0), 0.0, _mat("wall", 0.2))
+		for sx in [-1.0, 1.0]:
+			_box(n, Vector3(0.12, 0.12, d + 0.9), Vector3(sx * (w + 1.0) * 0.5, h + 0.05, 0), 0.0, _mat("wall", 0.2))
+		_box(n, Vector3(0.5, 1.4, 0.5), Vector3(w * 0.25, h + pr.size.y * 0.55, d * 0.2), 0.0, _mat("wall", 0.2))
 		# half-timbered gable ends: pale plaster triangle with dark beams, like the reference village
 		for e in [-1.0, 1.0]:
 			var g := MeshInstance3D.new()

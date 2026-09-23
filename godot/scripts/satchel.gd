@@ -11,12 +11,14 @@ var sel := 0
 var items: Array = []   # [{name, sub, text, count, icon}]
 var rot := 0.0
 var font: Font
+var gothic: Font
 var tab_rects := [Rect2(), Rect2()]
 var item_rects: Array = []
 var close_rect := Rect2()
 
-func setup(f: Font) -> void:
+func setup(f: Font, g: Font = null) -> void:
 	font = f
+	gothic = g if g else f
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func refresh(g: Dictionary) -> void:
@@ -46,8 +48,8 @@ func _frame(r: Rect2, on: bool) -> void:
 	for p in [r.position, Vector2(r.end.x - 5, r.position.y), Vector2(r.position.x, r.end.y - 5), r.end - Vector2(5, 5)]:
 		draw_rect(Rect2(p, Vector2(5, 5)), c, false, 1.0)
 
-func _text(s: String, pos: Vector2, size: int, col: Color, w := -1.0, align := HORIZONTAL_ALIGNMENT_LEFT) -> void:
-	draw_string(font, pos, s, align, w, size, col)
+func _text(s: String, pos: Vector2, size: int, col: Color, w := -1.0, align := HORIZONTAL_ALIGNMENT_LEFT, f: Font = null) -> void:
+	draw_string(f if f else font, pos, s, align, w, size, col)
 
 func _para(s: String, pos: Vector2, w: float, size: int, col: Color) -> void:
 	draw_multiline_string(font, pos, s, HORIZONTAL_ALIGNMENT_CENTER, w, size, -1, col)
@@ -127,7 +129,7 @@ func _draw() -> void:
 		var poly := _hand_poly(c, s)
 		_dots(poly, Rect2(c - Vector2(1.1, 1.3) * s, Vector2(2.2, 2.4) * s), 5.0, 0.45, rot / 100.0, 11)
 		var buds := int(round(rot / 100.0 * 12.0))
-		_text("Bearer's Hand", Vector2(0, h * 0.44 + s * 1.3 + 40), 26, PAPER, w, HORIZONTAL_ALIGNMENT_CENTER)
+		_text("Bearer's Hand", Vector2(0, h * 0.44 + s * 1.3 + 42), 32, PAPER, w, HORIZONTAL_ALIGNMENT_CENTER, gothic)
 		_text("Left, the one that carries", Vector2(0, h * 0.44 + s * 1.3 + 64), 13, Color(PAPER, 0.6), w, HORIZONTAL_ALIGNMENT_CENTER)
 		var line := "Clean skin. The rot has not reached it yet." if buds == 0 else ("The rot has opened %d red heads along the knuckles." % buds if rot < 70.0 else "It no longer feels like yours. It feels like a field.")
 		_para(line, Vector2(30, h * 0.44 + s * 1.3 + 96), w - 60, 14, PAPER)
@@ -135,7 +137,7 @@ func _draw() -> void:
 		var it: Dictionary = items[sel]
 		var c := Vector2(w * 0.5, h * 0.36)
 		_icon(it.icon, c, minf(w, h) * 0.2)
-		_text(it.name + ("  x%d" % it.count if it.icon != "reliq" else ""), Vector2(0, h * 0.56), 26, PAPER, w, HORIZONTAL_ALIGNMENT_CENTER)
+		_text(it.name + ("  x%d" % it.count if it.icon != "reliq" else ""), Vector2(0, h * 0.56), 32, PAPER, w, HORIZONTAL_ALIGNMENT_CENTER, gothic)
 		_text(it.sub, Vector2(0, h * 0.56 + 24), 13, Color(PAPER, 0.6), w, HORIZONTAL_ALIGNMENT_CENTER)
 		_para(it.text, Vector2(30, h * 0.56 + 56), w - 60, 14, PAPER)
 		var cw := 92.0
