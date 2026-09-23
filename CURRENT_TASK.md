@@ -21,6 +21,9 @@
 - [x] Conifers read at 390px: larger, lit edges, placed on the road side of ruins so the narrow phone canvas shows them (M15)
 - [x] Sound: kneel breath every ~3.6s while kneeling, soft two-note cue when an unsearched cache comes into range (M15)
 
+- [x] Rounded, soft-cornered frame closer to the reference's old-screen look (M18)
+- [x] Winter chunks (chunk mood > .8): pale snow drifts, sparse blossoms, dead stems (M18)
+
 **Owner:** web build owned by the O Empire web agent since 2026-09-23 (design-sweep agent is audit-only here; Godot track works only under godot/).
 
 ## Non-goals

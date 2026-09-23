@@ -20,3 +20,4 @@ Completed atomic steps, newest last. Do not redo anything listed here.
 | 2026-09-23 | M15 shipped; Instinct File embed fixed (game now runs in the File via shadow root) | commit 452a155; File generation 6 |
 | 2026-09-23 | M16: bearer scale .74, hand screen on pause (cards use items, WALK ON resumes), quick reveal timing | commit "M16 hand screen and smaller bearer"; File generation 7 |
 | 2026-09-23 | M17: reference audit of 9 Steam screenshots; hand screen gets INVENTORY/HAND tabs and a procedural dithered hand whose rot blossoms track G.rot | commit "M17 hand tab"; File generation 8 |
+| 2026-09-23 | M18: rounded frame mask with 4-step soft edge; drawSnow for winter chunks (3, 11, 16 of the road) with thinned blossoms | commit "M18 rounded frame and winter chunks"; File generation 9 |

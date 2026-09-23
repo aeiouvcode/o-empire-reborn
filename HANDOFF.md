@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M18 gaps from the reference audit (Steam app 4331110 screenshots): 1) the frame: reference uses a rounded CRT-like vignette with soft black corners, ours is a flat rectangle; 2) world scale: reference bearer is a few pixels in a vast field, ours still reads large, so consider a higher camera only if 390px stays readable; 3) winter/snow chunk variety (reference has pale snow fields and dark cliffs); 4) hand screen title in a blackletter-like face drawn in pixels rather than Georgia. Apply Naksh's sound feedback when it arrives.
+M19 remaining reference gaps: 1) world scale: reference bearer is a few pixels in a vast field; try a higher camera (proj dy factor .042 and z factors) behind a check that houses, caches and the bearer still read at 390px; 2) dark cliff masses in winter chunks; 3) pixel blackletter for screen titles. Apply Naksh's sound feedback when it arrives.
 
 ## Blocked
 
@@ -14,6 +14,7 @@ M18 gaps from the reference audit (Steam app 4331110 screenshots): 1) the frame:
 | --- | --- | --- |
 | Previewing an edited build via document.write or a blob: URL on the live Pages origin | The page's meta CSP pins script/style by sha256. The edited script is blocked, and blob: inherits the creator's CSP. Preview on about:blank instead, and recompute both hashes before every push. | 2026-09-23 |
 | Embedding the game in the Instinct File as an iframe srcdoc | The File host runs in an opaque sandbox with its own script CSP; srcdoc inherits it, so the game script never ran (title showed, BEGIN dead). Scripting the frame from the bundle fails too (cross-origin null). The File now mounts the game into a shadow root from the bundle (mkfile.js pattern). Always tap BEGIN on the File preview before publishing. | 2026-09-23 |
+| Frame edge as a 5px dark stroke inside the rounded rect | After dithering it read as a second inner border band; replaced with 4 stepped low-alpha evenodd masks | 2026-09-23 |
 | Using the o-empire-reborn page itself as the push bridge | connect-src 'none' blocks fetch to api.github.com. Use a bridge page without a CSP. | 2026-09-23 |
 
 ## Discoveries
