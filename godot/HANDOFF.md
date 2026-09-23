@@ -1,9 +1,10 @@
 # Handoff (Godot track, branch godot)
 
 ## Resume here
-Cycle 11: smoke visibility at normal zoom; title screen banner weight vs reference (lighter band?); audio pass (listen notes if owner reports); gamepad/keyboard pass over satchel and end screens. Live /godot/ frozen at cycle 6 until the owner confirms per-cycle redeploys.
+Cycle 12: smoke visibility at normal zoom; audio pass (listen notes if owner reports); satchel tab switching on touch (tap target size check at 390 wide). Live /godot/ = cycle 10 build (one-time go-live 9:49 PM); no further redeploys without a new go from the parent.
 
 ## Cycle log
+- Cycle 11: title and end bands are soft gradients (shader fades top/bottom) instead of hard boxes, so the type sits on the print like the reference. Restart guard: a tap or Start key within 1.2 s of the ending no longer skips the end screen. Source only. Grade PARTIAL.
 - Cycle 10: story-line queue (a line on screen finishes before the next shows; no more same-frame overwrites). End screens fixed - all-caps blackletter titles wrapped to three lines over the body text and were unreadable; now title case at 30 px, body and prompt moved down; lingering story lines cleared when the end screen opens. Source only. Grade PARTIAL.
 - Cycle 9: bug - the sprint "blossoms stir" line was overwritten in the same frame by a milestone line, so players could never see it; now it waits until no line is showing (verified in capture). Inventory icons on the finer 3.6 px dot plate with pale outlines, matching the hand. Source only. Grade PARTIAL.
 - Cycle 8: satchel hand redrawn - Chaikin-smoothed outline, finer 3.6 px dot plate, lighter tone, knuckle creases, heart/head/life lines, pale outline, iron ring on the ring finger (reference frame 6 wedding band), rot buds scaled 0.6. Grammar fix for one bud. Smoke: 8 smaller puffs that sway and swell. Source only. Grade PARTIAL.

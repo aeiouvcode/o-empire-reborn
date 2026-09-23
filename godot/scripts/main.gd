@@ -55,6 +55,7 @@ var audio
 var heart_t := 0.0
 var stir_told := false
 var note_queue: Array = []
+var end_at := -100000
 var satchel
 var last_step := 0
 
@@ -227,6 +228,7 @@ func _build_ui(layer: CanvasLayer) -> void:
 	band.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	title.add_child(band)
 	title.set_meta("band", band)
+	_soft_band(band, 0.62)
 	var t1 := _label(title, 52, PAPER)
 	t1.add_theme_font_override("font", gothic)
 	t1.text = "O EMPIRE!"
@@ -248,6 +250,7 @@ func _build_ui(layer: CanvasLayer) -> void:
 	eb.color = Color(0.06, 0.05, 0.06, 0.7)
 	eb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	endscr.add_child(eb)
+	_soft_band(eb, 0.78)
 	endscr.set_meta("band", eb)
 	end_title = _label(endscr, 30, PAPER)
 	end_title.add_theme_font_override("font", gothic)
@@ -298,16 +301,16 @@ func _layout() -> void:
 		b.position = Vector2(gx + place[k][0] * (bw + 8), gy + place[k][1] * (bh + 8))
 		b.size = Vector2(bw, bh)
 	var band: ColorRect = title.get_meta("band")
-	band.position = Vector2(x0, h * 0.30)
-	band.size = Vector2(w, 250)
+	band.position = Vector2(x0, h * 0.30 - 40)
+	band.size = Vector2(w, 330)
 	var tl: Array = title.get_meta("labels")
 	var ys := [h * 0.30 + 26, h * 0.30 + 90, h * 0.30 + 128, h * 0.30 + 200]
 	for i in 4:
 		tl[i].position = Vector2(x0 + 20, ys[i])
 		tl[i].size = Vector2(w - 40, 40)
 	var eb: ColorRect = endscr.get_meta("band")
-	eb.position = Vector2(x0, h * 0.32)
-	eb.size = Vector2(w, 230)
+	eb.position = Vector2(x0, h * 0.32 - 40)
+	eb.size = Vector2(w, 310)
 	end_title.position = Vector2(x0 + 20, h * 0.32 + 24)
 	end_title.size = Vector2(w - 40, 84)
 	end_sub.position = Vector2(x0 + 24, h * 0.32 + 124)
@@ -341,6 +344,15 @@ func _reset() -> void:
 	bearer.position = G.pos
 	cam_pos = Vector3.ZERO
 	_sync()
+
+func _soft_band(r: ColorRect, a: float) -> void:
+	# band fades out at top and bottom so the type sits on the print, not in a box
+	var sh := Shader.new()
+	sh.code = "shader_type canvas_item; uniform float a = 0.6; void fragment() { float e = smoothstep(0.0, 0.28, UV.y) * smoothstep(1.0, 0.72, UV.y); COLOR = vec4(0.07, 0.06, 0.07, a * e); }"
+	var m := ShaderMaterial.new()
+	m.shader = sh
+	m.set_shader_parameter("a", a)
+	r.material = m
 
 func _start() -> void:
 	_reset()
@@ -416,6 +428,7 @@ func _finish(ok: bool) -> void:
 	if G.ended:
 		return
 	G.ended = true
+	end_at = Time.get_ticks_msec()
 	G.mode = "end"
 	# blackletter capitals are unreadable; title case keeps the gothic face legible on a phone
 	end_title.text = "The Tower Remembers You" if ok else "No Empire Outlives Its Rot"
@@ -561,7 +574,7 @@ func _sync() -> void:
 	touch_ui.visible = playing and (params.has("touch") or DisplayServer.is_touchscreen_available())
 
 func _unhandled_input(ev: InputEvent) -> void:
-	if ev.is_action_pressed("start") and G.mode != "play":
+	if ev.is_action_pressed("start") and G.mode != "play" and Time.get_ticks_msec() - end_at > 1200:
 		_start()
 	if ev.is_action_pressed("satchel"):
 		_toggle_satchel()
@@ -587,7 +600,8 @@ func _input(ev: InputEvent) -> void:
 	if ev is InputEventScreenTouch:
 		if ev.pressed:
 			if G.mode != "play":
-				_start()
+				if Time.get_ticks_msec() - end_at > 1200:
+					_start()
 				get_viewport().set_input_as_handled()
 				return
 			if satchel.visible:
