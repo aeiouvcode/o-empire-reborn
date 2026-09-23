@@ -14,3 +14,6 @@ Completed atomic steps, newest last. Do not redo anything listed here.
 | 2026-09-23 | M14: Web Audio sound pass (wind, drone, steps, bells, cues, mute ♪/M, suspends when hidden) | same commit; headless 390x844: audio running, mute toggles, 0 errors |
 | 2026-09-23 | M14: pause/sound buttons given dark pill backing for legibility | same commit |
 | 2026-09-23 | M14: CSP hashes recomputed; directives unchanged; secret and sink scan clean | same commit |
+| 2026-09-23 | M15: phone title overlay reshaped (scene visible, type still legible) | commit "M15 title contrast, readable pines, bloom scale, kneel breath" |
+| 2026-09-23 | M15: conifers enlarged and moved roadward; bloom banks and heads scaled down | same commit |
+| 2026-09-23 | M15: kneel breath and cache-in-range cue added to the sound engine | same commit; headless 390x844: 0 errors, audio running |

@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M15: title screen contrast on phone (scene behind the title is too dark to read), then corridor bloom banks to match the field's blossom scale, then bearer scale/camera closer to the reference. Sound follow-up: a soft kneel breath and a quiet cue when a cache comes into range.
+M16: bearer scale and camera closer to the reference's near top-down small figure (drawBearer, proj). Then the inventory / hand screen in the reference's style (reference frame 4). Check with Naksh's feedback on sound loudness first if any has come in.
 
 ## Blocked
 
@@ -16,6 +16,9 @@ M15: title screen contrast on phone (scene behind the title is too dark to read)
 | Using the o-empire-reborn page itself as the push bridge | connect-src 'none' blocks fetch to api.github.com. Use a bridge page without a CSP. | 2026-09-23 |
 
 ## Discoveries
+
+- On phone the internal canvas is only ~125px wide (H=270 times the viewport aspect), so anything with |z| above ~14 in proj() lands offscreen. Place scenery the player must see on the road side.
+- The godot/ folder is deployed by the Godot track agent in its own commits; the web build only touches root files. Base each push on the current main head, not a remembered SHA.
 
 - Local headless Chrome in the sandbox (google-chrome + CDP from node) renders the game at 390x844 with touch emulation, so pixel and runtime checks don't need the shared cloud browser. Only the push does.
 - Web Audio needs no CSP change: oscillators and buffers aren't governed by media-src, so `media-src 'none'` stays.
