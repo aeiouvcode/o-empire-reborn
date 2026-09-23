@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M17: compare the hand screen and bearer against the Steam reference frames (app 4331110) and close the gaps; consider a slightly steeper camera (proj dy/z factors) only if it keeps the 15-chunk layout readable at 390px. Apply any sound-level feedback from Naksh.
+M18 gaps from the reference audit (Steam app 4331110 screenshots): 1) the frame: reference uses a rounded CRT-like vignette with soft black corners, ours is a flat rectangle; 2) world scale: reference bearer is a few pixels in a vast field, ours still reads large, so consider a higher camera only if 390px stays readable; 3) winter/snow chunk variety (reference has pale snow fields and dark cliffs); 4) hand screen title in a blackletter-like face drawn in pixels rather than Georgia. Apply Naksh's sound feedback when it arrives.
 
 ## Blocked
 
@@ -17,6 +17,8 @@ M17: compare the hand screen and bearer against the Steam reference frames (app 
 | Using the o-empire-reborn page itself as the push bridge | connect-src 'none' blocks fetch to api.github.com. Use a bridge page without a CSP. | 2026-09-23 |
 
 ## Discoveries
+
+- The Steam appdetails API (store.steampowered.com/api/appdetails?appids=4331110) lists the 9 reference screenshots directly; the reference hand screen is frame 4 (Inventory | Hand tabs).
 
 - On phone the internal canvas is only ~125px wide (H=270 times the viewport aspect), so anything with |z| above ~14 in proj() lands offscreen. Place scenery the player must see on the road side.
 - The godot/ folder is deployed by the Godot track agent in its own commits; the web build only touches root files. Base each push on the current main head, not a remembered SHA.

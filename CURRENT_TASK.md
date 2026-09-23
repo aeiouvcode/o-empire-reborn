@@ -13,7 +13,7 @@
 - [x] Corridor bloom banks closer to the field's dotted blossom scale (smaller banks and bloom heads) (M15)
 - [x] Bearer drawn at 74% scale, closer to the reference's small figure; stillness moths re-anchored (M16). Camera angle unchanged.
 - [x] Title screen on phone shows the scene: dark band only behind the type, field visible above and below (M15)
-- [x] Hand screen: pausing opens WHAT YOU CARRY with bread / tincture / reliquary cards (tap to use), a rot-dependent line, WALK ON (M16). First pass; not yet compared frame-by-frame with reference frame 4.
+- [x] Hand screen: pausing opens WHAT YOU CARRY with bread / tincture / reliquary cards (tap to use), a rot-dependent line, WALK ON (M16). M17: compared with reference frame 4 (Inventory | Hand tabs, large dithered hand, item title/subtitle/description); added INVENTORY/HAND tabs and a drawn dithered left hand with a ring and red thread, where rot blossoms climb from the wrist with G.rot.
 
 - [x] Synthesized sound, no assets, soft highs: wind bed by field density, low drone that detunes with rot, footsteps, search bell, milestone toll, bread/tincture cues, ending chords, mute toggle (♪ / M) (M14)
 - [x] Pause and sound buttons legible over the light field (M14)
