@@ -86,7 +86,44 @@ func _hand_poly(c: Vector2, s: float) -> PackedVector2Array:
 	var out := PackedVector2Array()
 	for p in pts:
 		out.append(c + Vector2(p[0], p[1]) * s)
+	# Chaikin smoothing: rounds knuckles and fingertips so the hand reads drawn, not cut from card
+	for it in 2:
+		var sm := PackedVector2Array()
+		for i in out.size():
+			var a := out[i]
+			var b := out[(i + 1) % out.size()]
+			sm.append(a.lerp(b, 0.25))
+			sm.append(a.lerp(b, 0.75))
+		out = sm
 	return out
+
+func _hand_detail(c: Vector2, s: float, poly: PackedVector2Array) -> void:
+	# anatomy in ink over the dot plate: knuckle creases, palm lines, a worn iron ring
+	var ink := Color(0.13, 0.115, 0.13, 1.0)
+	var fingers := [[Vector2(-0.39, -0.58), Vector2(-0.42, -1.05)], [Vector2(-0.09, -0.63), Vector2(-0.09, -1.25)], [Vector2(0.27, -0.6), Vector2(0.27, -1.15)], [Vector2(0.57, -0.42), Vector2(0.58, -0.86)]]
+	for f in fingers:
+		for t in [0.34, 0.66]:
+			var m: Vector2 = c + (f[0] as Vector2).lerp(f[1], t) * s
+			draw_line(m - Vector2(0.075 * s, 0), m + Vector2(0.075 * s, 0), ink, maxf(1.5, s * 0.018))
+	# palm lines: heart line, head line, life line round the thumb
+	var curves := [
+		[Vector2(0.58, -0.28), Vector2(0.25, -0.36), Vector2(-0.1, -0.33), Vector2(-0.36, -0.42)],
+		[Vector2(0.5, -0.08), Vector2(0.15, -0.12), Vector2(-0.2, -0.1), Vector2(-0.52, -0.02)],
+		[Vector2(-0.46, -0.12), Vector2(-0.34, 0.2), Vector2(-0.3, 0.5), Vector2(-0.34, 0.8)],
+	]
+	for cv in curves:
+		var pts := PackedVector2Array()
+		for q in cv:
+			pts.append(c + (q as Vector2) * s)
+		draw_polyline(pts, ink, maxf(1.5, s * 0.02), true)
+	# outline in pale ink so the silhouette reads on the dark page
+	var ol := poly.duplicate()
+	ol.append(poly[0])
+	draw_polyline(ol, Color(PAPER, 0.55), 1.2, true)
+	# iron ring on the ring finger
+	var rc: Vector2 = c + Vector2(0.27, -0.72) * s
+	draw_rect(Rect2(rc - Vector2(0.095, 0.035) * s, Vector2(0.19, 0.07) * s), PAPER)
+	draw_rect(Rect2(rc - Vector2(0.095, 0.035) * s + Vector2(0, 0.045 * s), Vector2(0.19, 0.02) * s), Color(0.55, 0.52, 0.5))
 
 func _icon(kind: String, c: Vector2, s: float) -> void:
 	match kind:
@@ -127,11 +164,12 @@ func _draw() -> void:
 		var c := Vector2(w * 0.5, h * 0.44)
 		var s := minf(w, h) * 0.3
 		var poly := _hand_poly(c, s)
-		_dots(poly, Rect2(c - Vector2(1.1, 1.3) * s, Vector2(2.2, 2.4) * s), 5.0, 0.45, rot / 100.0, 11)
+		_dots(poly, Rect2(c - Vector2(1.1, 1.3) * s, Vector2(2.2, 2.4) * s), 3.6, 0.62, rot / 100.0 * 0.6, 11)
+		_hand_detail(c, s, poly)
 		var buds := int(round(rot / 100.0 * 12.0))
 		_text("Bearer's Hand", Vector2(0, h * 0.44 + s * 1.3 + 42), 32, PAPER, w, HORIZONTAL_ALIGNMENT_CENTER, gothic)
 		_text("Left, the one that carries", Vector2(0, h * 0.44 + s * 1.3 + 64), 13, Color(PAPER, 0.6), w, HORIZONTAL_ALIGNMENT_CENTER)
-		var line := "Clean skin. The rot has not reached it yet." if buds == 0 else ("The rot has opened %d red heads along the knuckles." % buds if rot < 70.0 else "It no longer feels like yours. It feels like a field.")
+		var line := "An iron ring, worn thin. " + ("Clean skin. The rot has not reached it yet." if buds == 0 else (("The rot has opened one red head by the knuckles." if buds == 1 else "The rot has opened %d red heads along the knuckles." % buds) if rot < 70.0 else "It no longer feels like yours. It feels like a field."))
 		_para(line, Vector2(30, h * 0.44 + s * 1.3 + 96), w - 60, 14, PAPER)
 	else:
 		var it: Dictionary = items[sel]

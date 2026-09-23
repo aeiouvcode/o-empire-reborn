@@ -271,16 +271,19 @@ func _house(parent: Node3D, pos: Vector3, rot_y: float, rng: RandomNumberGenerat
 				b.rotation.z = -sx * ang
 		_box(n, Vector3(0.5, 1.4, 0.5), Vector3(w * 0.25, h + pr.size.y * 0.55, d * 0.2), 0.0, _mat("wall", 0.2))
 		# chimney smoke: dark ink puffs thinning as they drift, like the reference burning house
-		for k in 5:
+		for k in 8:
 			var puff := MeshInstance3D.new()
 			var sp := SphereMesh.new()
-			sp.radius = 0.35 + k * 0.18
+			sp.radius = 0.22 + k * 0.08
 			sp.height = sp.radius * 1.6
 			sp.radial_segments = 8
 			sp.rings = 4
 			puff.mesh = sp
-			puff.material_override = _mat("smoke%d" % k, 0.2 + k * 0.08, {"shading_mode": BaseMaterial3D.SHADING_MODE_UNSHADED})
-			puff.position = Vector3(w * 0.25 + k * 0.6, h + pr.size.y * 0.55 + 1.0 + k * 0.7, d * 0.2 - k * 0.5)
+			puff.material_override = _mat("smoke%d" % k, 0.22 + k * 0.07, {"shading_mode": BaseMaterial3D.SHADING_MODE_UNSHADED})
+			puff.position = Vector3(w * 0.25 + k * 0.38, h + pr.size.y * 0.55 + 0.9 + k * 0.45, d * 0.2 - k * 0.3)
+			puff.set_meta("base", puff.position)
+			puff.set_meta("k", k)
+			puff.add_to_group("smoke")
 			puff.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			n.add_child(puff)
 		# half-timbered gable ends: pale plaster triangle with dark beams, like the reference village
@@ -421,6 +424,13 @@ func _build_chunk(ci: int) -> Node3D:
 	return root
 
 func update_around(prog: float, at: Vector3) -> void:
+	# smoke drifts: each puff sways and swells slightly, higher puffs more
+	var tt := Time.get_ticks_msec() / 1000.0
+	for pf in get_tree().get_nodes_in_group("smoke"):
+		var b: Vector3 = pf.get_meta("base")
+		var k: int = pf.get_meta("k")
+		pf.position = b + Vector3(sin(tt * 0.6 + k * 0.9) * 0.08 * k, sin(tt * 0.4 + k) * 0.1, cos(tt * 0.5 + k * 0.7) * 0.06 * k)
+		pf.scale = Vector3.ONE * (1.0 + 0.08 * sin(tt * 0.7 + k * 1.3))
 	ground.position = Vector3(round(at.x / 10.0) * 10.0, 0, round(at.z / 10.0) * 10.0)
 	ash.position = at + Vector3(0, 12, -6)
 	var ci := int(floor(prog / CHUNK))
