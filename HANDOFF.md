@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M30: get Naksh's read on the blur/shots first. Open: paper-white snow question; real-phone check of the File stage height; real-desktop check that touch controls stay hidden. Pushes go through the GitHub web editor only (parent rule 9/24 8:25 PM).
+M31: get Naksh's read on M30 (finer halftone, flower drifts, rocks, cloud light) and the blur. Open: paper-white snow question (ground stays ash until he answers); real-phone perf check of 2x rendering (auto-fallback exists); real-phone File stage height. Pushes go through the GitHub web editor only (parent rule 9/24 8:25 PM).
 
 ## Blocked
 
