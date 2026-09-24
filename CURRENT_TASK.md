@@ -39,6 +39,12 @@
 - [x] Wind-hatched snow: short dark diagonal streaks anchored to the world, after the Steam reference's snow texture (drawWindHatch) (M23)
 - [x] Long raking shadows off conifers and houses toward the upper right (M23)
 
+- [x] Naksh playtest 9/24: bearer walked in place while the world slid and boiled. Now the world holds still and the bearer walks the road up the screen; the camera glides to re-frame only when the bearer nears the top (M24)
+- [x] Camera scroll snapped to whole pixels and dither patterns anchored to the world, so the ground no longer shimmers while moving (M24)
+- [x] Leg poses keyed to distance walked, so feet plant instead of sliding (M24)
+- [x] Drifting ash/snow flecks for ambient motion (M24)
+- [x] Mobile controls: vertical WALK/BACK rail replaces the round stick (the walk is 1D), buttons 58-72px with 10px labels, pause and sound 44x36 and no longer overlapping, HUD text 8px (M24)
+
 **Owner:** web build owned by the O Empire web agent since 2026-09-23 (design-sweep agent is audit-only here; Godot track works only under godot/).
 
 ## Non-goals

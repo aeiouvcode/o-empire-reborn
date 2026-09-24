@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M24 candidates: 1) house shadows still read weakly after dithering; darker or longer if needed; 2) reference snow is brighter paper-white than our mid-gray ground (palette change; check with Naksh before shifting the ash palette); 3) digits in the glyph set; 4) Naksh's sound feedback.
+M25: get Naksh's read on M24 walking and controls first. Then: house shadows still faint; File framing puts the bearer near the bottom of the File stage; desktop headless reports touch so controls show on desktop too (check on a real desktop); paper-white snow question still open.
 
 ## Blocked
 
@@ -19,6 +19,10 @@ M24 candidates: 1) house shadows still read weakly after dithering; darker or lo
 | Using the o-empire-reborn page itself as the push bridge | connect-src 'none' blocks fetch to api.github.com. Use a bridge page without a CSP. | 2026-09-23 |
 
 ## Discoveries
+
+- World scale is PX (screen px per world unit, now .07). proj() and drawPost's worldAtPixel both use it; the camera is G.cam/G.camT (along the road) and G.camX/G.camXT (sideways), both eased, both applied as whole pixels.
+- The walk is 1D (input uses touch.y only), so the touch control is a vertical rail; sm() ignores x.
+- walkrec.mjs records real-time frames while walking; touchqa.mjs drives the rail with CDP touch events and reports control rects.
 
 - Steam's appdetails API returns Access Denied to curl from the sandbox; web_fetch on the same URL works and lists the 9 screenshot URLs, which then download fine with curl.
 - Low-alpha 1px strokes vanish in drawPost's quantize/dither; ground detail needs alpha around .8 and a dark color to survive.
