@@ -22,3 +22,4 @@ Completed atomic steps, newest last. Do not redo anything listed here.
 | 2026-09-23 | M17: reference audit of 9 Steam screenshots; hand screen gets INVENTORY/HAND tabs and a procedural dithered hand whose rot blossoms track G.rot | commit "M17 hand tab"; File generation 8 |
 | 2026-09-23 | M18: rounded frame mask with 4-step soft edge; drawSnow for winter chunks (3, 11, 16 of the road) with thinned blossoms | commit "M18 rounded frame and winter chunks"; File generation 9 |
 | 2026-09-24 | M19: drawCliffs (two dark crags with snowy top plane and cast shadow per winter chunk), bearer scale .74 -> .6 | commit "M19 winter cliffs and smaller bearer"; File generation 10 |
+| 2026-09-24 | M20: props scaled with bearer; pixLine/pixTitle bitmap blackletter for title and end screens; cliff face texture | commit "M20 world scale, pixel blackletter titles, cliff texture"; File generation 11 |

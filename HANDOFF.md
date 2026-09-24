@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M20 gaps: 1) true world-scale pull-back: scale trees, houses and caches with the bearer (bearer alone is now .6 so trees read large next to it); keep 390px readable; 2) pixel blackletter for screen titles (drawn on canvas or a hand-built bitmap font, no font files); 3) cliffs could gain a dithered face texture; 4) Naksh's sound feedback when it arrives.
+M21 gaps: 1) end screen still shows HUD, touch controls and a flavor line behind the panel; hide them in mode 'end'; 2) glyph set covers A B D E F H I L M N O P R S T U V W Y ! only; add the rest before any new title text; 3) glyphs could gain hairline flourishes closer to true textura; 4) Naksh's sound feedback when it arrives.
 
 ## Blocked
 
@@ -18,6 +18,8 @@ M20 gaps: 1) true world-scale pull-back: scale trees, houses and caches with the
 | Using the o-empire-reborn page itself as the push bridge | connect-src 'none' blocks fetch to api.github.com. Use a bridge page without a CSP. | 2026-09-23 |
 
 ## Discoveries
+
+- Screen titles are canvases built by pixTitle(el) from PG/PW glyph tables; any code that rewrites a .title must call pixTitle again (endGame does).
 
 - Scenery drawn inside drawSnow gets covered by the blossom field; solid landforms need their own pass after the field (drawCliffs sits before the window/structure pass).
 - File preview tap target moves with page layout; locate BEGIN in the screenshot before tapping.

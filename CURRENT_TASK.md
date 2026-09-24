@@ -26,6 +26,10 @@
 
 - [x] Dark cliff masses in winter chunks (drawCliffs, drawn over the field so blossoms do not cover them) and a smaller bearer (.6) for a higher-camera read (M19)
 
+- [x] World pull-back: conifers, houses and walls scaled down with the bearer (M20)
+- [x] Pixel blackletter screen titles: hand-built 9px bitmap glyphs drawn to canvas, aria-label keeps the text (M20)
+- [x] Cliff faces get a lit west edge and dithered base shade (M20)
+
 **Owner:** web build owned by the O Empire web agent since 2026-09-23 (design-sweep agent is audit-only here; Godot track works only under godot/).
 
 ## Non-goals
