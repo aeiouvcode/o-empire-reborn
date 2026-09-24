@@ -50,6 +50,7 @@
 - [x] Left and right edges blur too, like the original's frame; road drawn paler and stronger so it reads at the new scale (M27)
 - [x] File only: stage sized to the phone width (clamp 480-740px) and the first tap scrolls the whole game into view; controls copy names the WALK rail (M28, File generation 19)
 - [x] House and tree shadows darker and crisper; touch controls need a coarse pointer or a real touch, so desktop windows with a mouse stay clean (M29)
+- [x] M31 9/25 2 AM: roadside flower patches redrawn as small clumps in the same bloom style as the field (stems, tiny shadows); lone stray flowers in open ground are fewer and never large, so no more big red blobs outside the drifts.
 - [x] Night push 9/25: rendering at 2x internal resolution, so the halftone and dither are fine-grained like the original, with an automatic drop to 1x if a device can't hold ~30fps; flowers redrawn as blooms with stems and small cast shadows, gathered in diagonal drifts with open ground between; black cliff boxes replaced by low pale rocks with long shadows; slow drifting cloud light over the field (M30)
 - [x] Mobile controls: vertical WALK/BACK rail replaces the round stick (the walk is 1D), buttons 58-72px with 10px labels, pause and sound 44x36 and no longer overlapping, HUD text 8px (M24)
 
