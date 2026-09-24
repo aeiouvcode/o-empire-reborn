@@ -34,6 +34,8 @@
 - [x] Title screen in the File no longer shows the HUD behind the title ('attitle' class; body:has does not reach into the File's shadow root) (M21)
 - [x] Blackletter glyph set complete for A-Z plus . , ' ? - (M21)
 
+- [x] Blackletter pen flicks: one hairline entry stroke top-left and one exit tail bottom-right per glyph, drawn after the pixels (M22)
+
 **Owner:** web build owned by the O Empire web agent since 2026-09-23 (design-sweep agent is audit-only here; Godot track works only under godot/).
 
 ## Non-goals

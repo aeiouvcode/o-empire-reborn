@@ -24,3 +24,4 @@ Completed atomic steps, newest last. Do not redo anything listed here.
 | 2026-09-24 | M19: drawCliffs (two dark crags with snowy top plane and cast shadow per winter chunk), bearer scale .74 -> .6 | commit "M19 winter cliffs and smaller bearer"; File generation 10 |
 | 2026-09-24 | M20: props scaled with bearer; pixLine/pixTitle bitmap blackletter for title and end screens; cliff face texture | commit "M20 world scale, pixel blackletter titles, cliff texture"; File generation 11 |
 | 2026-09-24 | M21: ended/attitle classes hide HUD and touch controls on end and title screens (Pages and File); glyphs C G J K Q X Z . , ' ? - added | commit "M21 clean ending and title screens, full blackletter glyph set"; File generation 12 |
+| 2026-09-24 | M22: pixLine draws hairline pen flicks (entry top-left, exit tail bottom-right, one each per glyph wider than 2) | commit "M22 blackletter pen flicks"; File generation 13 |

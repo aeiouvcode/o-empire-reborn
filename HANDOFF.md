@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M22 candidates: 1) textura hairline flourishes on the blackletter glyphs; 2) no digits in the glyph set yet; 3) Naksh's sound feedback when it arrives; 4) keep pushing look and motion toward the reference.
+M23 candidates: 1) look and motion toward the reference (bearer gait, fog drift, flower shimmer) - fetch the Steam screenshots via appdetails to compare; 2) digits in the glyph set; 3) Naksh's sound feedback when it arrives.
 
 ## Blocked
 
@@ -12,6 +12,7 @@ M22 candidates: 1) textura hairline flourishes on the blackletter glyphs; 2) no 
 
 | Approach | Why it failed | Date |
 | --- | --- | --- |
+| Hairlines on every stem top and foot, stepped in square dots | Read as scratches and debris, not pen strokes; replaced with one continuous flick in and out per glyph | 2026-09-24 |
 | Previewing an edited build via document.write or a blob: URL on the live Pages origin | The page's meta CSP pins script/style by sha256. The edited script is blocked, and blob: inherits the creator's CSP. Preview on about:blank instead, and recompute both hashes before every push. | 2026-09-23 |
 | Embedding the game in the Instinct File as an iframe srcdoc | The File host runs in an opaque sandbox with its own script CSP; srcdoc inherits it, so the game script never ran (title showed, BEGIN dead). Scripting the frame from the bundle fails too (cross-origin null). The File now mounts the game into a shadow root from the bundle (mkfile.js pattern). Always tap BEGIN on the File preview before publishing. | 2026-09-23 |
 | Frame edge as a 5px dark stroke inside the rounded rect | After dithering it read as a second inner border band; replaced with 4 stepped low-alpha evenodd masks | 2026-09-23 |
