@@ -24,6 +24,8 @@
 - [x] Rounded, soft-cornered frame closer to the reference's old-screen look (M18)
 - [x] Winter chunks (chunk mood > .8): pale snow drifts, sparse blossoms, dead stems (M18)
 
+- [x] Dark cliff masses in winter chunks (drawCliffs, drawn over the field so blossoms do not cover them) and a smaller bearer (.6) for a higher-camera read (M19)
+
 **Owner:** web build owned by the O Empire web agent since 2026-09-23 (design-sweep agent is audit-only here; Godot track works only under godot/).
 
 ## Non-goals

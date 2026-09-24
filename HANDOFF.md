@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M19 remaining reference gaps: 1) world scale: reference bearer is a few pixels in a vast field; try a higher camera (proj dy factor .042 and z factors) behind a check that houses, caches and the bearer still read at 390px; 2) dark cliff masses in winter chunks; 3) pixel blackletter for screen titles. Apply Naksh's sound feedback when it arrives.
+M20 gaps: 1) true world-scale pull-back: scale trees, houses and caches with the bearer (bearer alone is now .6 so trees read large next to it); keep 390px readable; 2) pixel blackletter for screen titles (drawn on canvas or a hand-built bitmap font, no font files); 3) cliffs could gain a dithered face texture; 4) Naksh's sound feedback when it arrives.
 
 ## Blocked
 
@@ -18,6 +18,9 @@ M19 remaining reference gaps: 1) world scale: reference bearer is a few pixels i
 | Using the o-empire-reborn page itself as the push bridge | connect-src 'none' blocks fetch to api.github.com. Use a bridge page without a CSP. | 2026-09-23 |
 
 ## Discoveries
+
+- Scenery drawn inside drawSnow gets covered by the blossom field; solid landforms need their own pass after the field (drawCliffs sits before the window/structure pass).
+- File preview tap target moves with page layout; locate BEGIN in the screenshot before tapping.
 
 - The Steam appdetails API (store.steampowered.com/api/appdetails?appids=4331110) lists the 9 reference screenshots directly; the reference hand screen is frame 4 (Inventory | Hand tabs).
 
