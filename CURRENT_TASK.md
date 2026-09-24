@@ -48,6 +48,8 @@
 - [x] Smaller bearer with a long cast shadow to the upper right; denser red field; the far tower looms at the top edge over the last stretch (M25)
 - [x] Naksh 9/24 8:12 PM: "varying Blur is missing, it gives it the depth". Tilt-shift depth blur: sharp band through the middle of each shot, soft half-res blur then heavy fifth-res blur toward top and bottom; band is fixed per shot so it never shimmers (M26)
 - [x] Left and right edges blur too, like the original's frame; road drawn paler and stronger so it reads at the new scale (M27)
+- [x] File only: stage sized to the phone width (clamp 480-740px) and the first tap scrolls the whole game into view; controls copy names the WALK rail (M28, File generation 19)
+- [x] House and tree shadows darker and crisper; touch controls need a coarse pointer or a real touch, so desktop windows with a mouse stay clean (M29)
 - [x] Mobile controls: vertical WALK/BACK rail replaces the round stick (the walk is 1D), buttons 58-72px with 10px labels, pause and sound 44x36 and no longer overlapping, HUD text 8px (M24)
 
 **Owner:** web build owned by the O Empire web agent since 2026-09-23 (design-sweep agent is audit-only here; Godot track works only under godot/).
