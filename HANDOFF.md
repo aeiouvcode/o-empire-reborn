@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M26: get Naksh's read on M24/M25 walking, shots and controls first. Then: road reads faint at the new scale; house shadows still faint; File framing puts the bearer near the bottom of the File stage; desktop headless reports touch so controls show on desktop too; paper-white snow question still open.
+M27: get Naksh's read on M26 depth blur first (strength, band width; possible side blur like the original's left edge). Then: stronger road; File framing (bearer near bottom of File stage); faint house shadows; touch controls on desktop; paper-white snow question pending.
 
 ## Blocked
 
