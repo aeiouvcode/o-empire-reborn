@@ -43,6 +43,9 @@
 - [x] Camera scroll snapped to whole pixels and dither patterns anchored to the world, so the ground no longer shimmers while moving (M24)
 - [x] Leg poses keyed to distance walked, so feet plant instead of sliding (M24)
 - [x] Drifting ash/snow flecks for ambient motion (M24)
+- [x] Fixed shots like the original: the frame holds while the bearer crosses it (~9s), then slides one screen in 0.75s (M25)
+- [x] Visual world 10x longer (Z=10) so the bearer moves ~16px/s on screen; run length and pacing unchanged (M25)
+- [x] Smaller bearer with a long cast shadow to the upper right; denser red field; the far tower looms at the top edge over the last stretch (M25)
 - [x] Mobile controls: vertical WALK/BACK rail replaces the round stick (the walk is 1D), buttons 58-72px with 10px labels, pause and sound 44x36 and no longer overlapping, HUD text 8px (M24)
 
 **Owner:** web build owned by the O Empire web agent since 2026-09-23 (design-sweep agent is audit-only here; Godot track works only under godot/).
