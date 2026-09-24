@@ -30,6 +30,10 @@
 - [x] Pixel blackletter screen titles: hand-built 9px bitmap glyphs drawn to canvas, aria-label keeps the text (M20)
 - [x] Cliff faces get a lit west edge and dithered base shade (M20)
 
+- [x] Ending screen clean: HUD, touch controls and flavor line hidden while the ending shows ('ended' class, restored on WALK AGAIN) (M21)
+- [x] Title screen in the File no longer shows the HUD behind the title ('attitle' class; body:has does not reach into the File's shadow root) (M21)
+- [x] Blackletter glyph set complete for A-Z plus . , ' ? - (M21)
+
 **Owner:** web build owned by the O Empire web agent since 2026-09-23 (design-sweep agent is audit-only here; Godot track works only under godot/).
 
 ## Non-goals

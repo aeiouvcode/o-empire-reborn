@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M21 gaps: 1) end screen still shows HUD, touch controls and a flavor line behind the panel; hide them in mode 'end'; 2) glyph set covers A B D E F H I L M N O P R S T U V W Y ! only; add the rest before any new title text; 3) glyphs could gain hairline flourishes closer to true textura; 4) Naksh's sound feedback when it arrives.
+M22 candidates: 1) textura hairline flourishes on the blackletter glyphs; 2) no digits in the glyph set yet; 3) Naksh's sound feedback when it arrives; 4) keep pushing look and motion toward the reference.
 
 ## Blocked
 
@@ -18,6 +18,9 @@ M21 gaps: 1) end screen still shows HUD, touch controls and a flavor line behind
 | Using the o-empire-reborn page itself as the push bridge | connect-src 'none' blocks fetch to api.github.com. Use a bridge page without a CSP. | 2026-09-23 |
 
 ## Discoveries
+
+- In the File the game lives in a shadow root and document.body maps to #wrap, so body:has(...) rules never match there. Toggle classes on document.body (ended, attitle) instead; that works in both builds.
+- Toolchain lives only in the sandbox (csp.py, cdp.mjs, qa.mjs, fileqa.mjs, endqa.mjs, mkfile.js); if the sandbox resets, rebuild from the O Empire chat history.
 
 - Screen titles are canvases built by pixTitle(el) from PG/PW glyph tables; any code that rewrites a .title must call pixTitle again (endGame does).
 
