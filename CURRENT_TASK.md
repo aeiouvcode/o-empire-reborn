@@ -36,6 +36,9 @@
 
 - [x] Blackletter pen flicks: one hairline entry stroke top-left and one exit tail bottom-right per glyph, drawn after the pixels (M22)
 
+- [x] Wind-hatched snow: short dark diagonal streaks anchored to the world, after the Steam reference's snow texture (drawWindHatch) (M23)
+- [x] Long raking shadows off conifers and houses toward the upper right (M23)
+
 **Owner:** web build owned by the O Empire web agent since 2026-09-23 (design-sweep agent is audit-only here; Godot track works only under godot/).
 
 ## Non-goals

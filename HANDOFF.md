@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M23 candidates: 1) look and motion toward the reference (bearer gait, fog drift, flower shimmer) - fetch the Steam screenshots via appdetails to compare; 2) digits in the glyph set; 3) Naksh's sound feedback when it arrives.
+M24 candidates: 1) house shadows still read weakly after dithering; darker or longer if needed; 2) reference snow is brighter paper-white than our mid-gray ground (palette change; check with Naksh before shifting the ash palette); 3) digits in the glyph set; 4) Naksh's sound feedback.
 
 ## Blocked
 
@@ -19,6 +19,10 @@ M23 candidates: 1) look and motion toward the reference (bearer gait, fog drift,
 | Using the o-empire-reborn page itself as the push bridge | connect-src 'none' blocks fetch to api.github.com. Use a bridge page without a CSP. | 2026-09-23 |
 
 ## Discoveries
+
+- Steam's appdetails API returns Access Denied to curl from the sandbox; web_fetch on the same URL works and lists the 9 screenshot URLs, which then download fine with curl.
+- Low-alpha 1px strokes vanish in drawPost's quantize/dither; ground detail needs alpha around .8 and a dark color to survive.
+- Headless software render is ~20ms per frame at 390x844 DPR2 (perf.mjs); use it for before/after deltas, not absolute numbers.
 
 - In the File the game lives in a shadow root and document.body maps to #wrap, so body:has(...) rules never match there. Toggle classes on document.body (ended, attitle) instead; that works in both builds.
 - Toolchain lives only in the sandbox (csp.py, cdp.mjs, qa.mjs, fileqa.mjs, endqa.mjs, mkfile.js); if the sandbox resets, rebuild from the O Empire chat history.
