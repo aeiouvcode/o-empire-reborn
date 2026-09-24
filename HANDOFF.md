@@ -2,7 +2,7 @@
 
 ## Resume here
 
-M31: get Naksh's read on M30 (finer halftone, flower drifts, rocks, cloud light) and the blur. Open: paper-white snow question (ground stays ash until he answers); real-phone perf check of 2x rendering (auto-fallback exists); real-phone File stage height. Pushes go through the GitHub web editor only (parent rule 9/24 8:25 PM).
+M32: get Naksh's read on M30 (M31 roadside clumps; M30 finer halftone, flower drifts, rocks, cloud light) and the blur. Open: paper-white snow question (ground stays ash until he answers); real-phone perf check of 2x rendering (auto-fallback exists); real-phone File stage height. Pushes go through the GitHub web editor only (parent rule 9/24 8:25 PM).
 
 ## Blocked
 
